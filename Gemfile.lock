@@ -99,6 +99,8 @@ GEM
     email_validator (2.2.4)
       activemodel
     erubi (1.13.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.6)
@@ -247,6 +249,7 @@ DEPENDENCIES
   debug
   devise
   email_validator
+  faker
   importmap-rails
   jbuilder
   pg (~> 1.1)
