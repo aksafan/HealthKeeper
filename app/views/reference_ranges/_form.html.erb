@@ -1,0 +1,52 @@
+<%= form_with(model: reference_range) do |form| %>
+  <% if reference_range.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(reference_range.errors.count, "error") %> prohibited this reference_range from being saved:</h2>
+
+      <ul>
+        <% reference_range.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :biomarker_id, style: "display: block" %>
+    <%= form.text_field :biomarker_id %>
+  </div>
+
+  <div>
+    <%= form.label :min_value, style: "display: block" %>
+    <%= form.text_field :min_value %>
+  </div>
+
+  <div>
+    <%= form.label :max_value, style: "display: block" %>
+    <%= form.text_field :max_value %>
+  </div>
+
+  <div>
+    <%= form.label :unit, style: "display: block" %>
+    <%= form.text_field :unit %>
+  </div>
+
+  <div>
+    <%= form.label :source, style: "display: block" %>
+    <%= form.text_field :source %>
+  </div>
+
+  <div>
+    <%= form.label :created_at, style: "display: block" %>
+    <%= form.datetime_field :created_at %>
+  </div>
+
+  <div>
+    <%= form.label :updated_at, style: "display: block" %>
+    <%= form.datetime_field :updated_at %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

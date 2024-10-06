@@ -1,0 +1,62 @@
+<%= form_with(model: measurement) do |form| %>
+  <% if measurement.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(measurement.errors.count, "error") %> prohibited this measurement from being saved:</h2>
+
+      <ul>
+        <% measurement.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :type, style: "display: block" %>
+    <%= form.number_field :type %>
+  </div>
+
+  <div>
+    <%= form.label :value, style: "display: block" %>
+    <%= form.text_field :value %>
+  </div>
+
+  <div>
+    <%= form.label :source, style: "display: block" %>
+    <%= form.text_field :source %>
+  </div>
+
+  <div>
+    <%= form.label :recordable_type, style: "display: block" %>
+    <%= form.text_field :recordable_type %>
+  </div>
+
+  <div>
+    <%= form.label :recordable_id, style: "display: block" %>
+    <%= form.number_field :recordable_id %>
+  </div>
+
+  <div>
+    <%= form.label :notes, style: "display: block" %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div>
+    <%= form.label :created_at, style: "display: block" %>
+    <%= form.datetime_field :created_at %>
+  </div>
+
+  <div>
+    <%= form.label :updated_at, style: "display: block" %>
+    <%= form.datetime_field :updated_at %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

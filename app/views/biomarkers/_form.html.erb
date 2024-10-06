@@ -1,0 +1,22 @@
+<%= form_with(model: biomarker) do |form| %>
+  <% if biomarker.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(biomarker.errors.count, "error") %> prohibited this biomarker from being saved:</h2>
+
+      <ul>
+        <% biomarker.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

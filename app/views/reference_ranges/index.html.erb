@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Reference ranges</h1>
+
+<div id="reference_ranges">
+  <% @reference_ranges.each do |reference_range| %>
+    <%= render reference_range %>
+    <p>
+      <%= link_to "Show this reference range", reference_range %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New reference range", new_reference_range_path %>
