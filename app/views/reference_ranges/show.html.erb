@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @reference_range %>
+
+<div>
+  <%= link_to "Edit this reference range", edit_reference_range_path(@reference_range) %> |
+  <%= link_to "Back to reference ranges", reference_ranges_path %>
+
+  <%= button_to "Destroy this reference range", @reference_range, method: :delete %>
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @biomarker %>
+
+<div>
+  <%= link_to "Edit this biomarker", edit_biomarker_path(@biomarker) %> |
+  <%= link_to "Back to biomarkers", biomarkers_path %>
+
+  <%= button_to "Destroy this biomarker", @biomarker, method: :delete %>
+</div>

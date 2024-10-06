@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Biomarkers</h1>
+
+<div id="biomarkers">
+  <% @biomarkers.each do |biomarker| %>
+    <%= render biomarker %>
+    <p>
+      <%= link_to "Show this biomarker", biomarker %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New biomarker", new_biomarker_path %>
