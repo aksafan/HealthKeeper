@@ -50,8 +50,10 @@ gem 'rolify'
 
 gem 'email_validator'
 
+# Styling
 gem "bootstrap"
 gem "sassc-rails"
+gem "tailwindcss-rails", "~> 2.7"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -72,4 +74,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-
