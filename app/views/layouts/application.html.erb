@@ -45,7 +45,8 @@
             <span> Welcome <%= current_user.full_name %> </span>
             <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary", form_class: "sign-out-button" %>
           <% else %>
-            <%= button_to "Sign in", new_user_session_path, class: "btn btn-outline-success" %>
+            <%= button_to "Sign in", new_user_session_path, class: "btn btn-success" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-success" %>
           <% end %>
         </div>
       </div>
