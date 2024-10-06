@@ -96,6 +96,8 @@ GEM
       responders
       warden (~> 1.2.3)
     drb (2.2.1)
+    email_validator (2.2.4)
+      activemodel
     erubi (1.13.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -244,6 +246,7 @@ DEPENDENCIES
   bootsnap
   debug
   devise
+  email_validator
   importmap-rails
   jbuilder
   pg (~> 1.1)

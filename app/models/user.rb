@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :measurements, dependent: :destroy
 
   resourcify
+
+  validates :email, presence: true, uniqueness: true, email: true
 end
