@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <h3>Health Keeper</h3>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <% %>
+          <%= link_to "Health records", health_records_path, class: "nav-link #{current_page?(health_records_path) ? 'active' : ''}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Lab tests", lab_tests_path, class: "nav-link #{current_page?(lab_tests_path) ? 'active' : ''}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Measurements", measurements_path, class: "nav-link #{current_page?(measurements_path) ? 'active' : ''}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Biomarkers", biomarkers_path, class: "nav-link #{current_page?(biomarkers_path) ? 'active' : ''}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Reference ranges", reference_ranges_path, class: "nav-link #{current_page?(reference_ranges_path) ? 'active' : ''}" %>
+        </li>
+      </ul>
+      <% if user_signed_in? %>
+        <span> Welcome <%= current_user.full_name %> </span>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary", form_class: "sign-out-button" %>
+      <% else %>
+        <%= button_to "Sign in", new_user_session_path, class: "btn btn-success" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-success" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
