@@ -3,25 +3,29 @@ class HealthRecordsController < ApplicationController
 
   # GET /health_records or /health_records.json
   def index
-    @health_records = HealthRecord.all
+    @health_records = policy_scope(HealthRecord.all)
   end
 
   # GET /health_records/1 or /health_records/1.json
   def show
+    authorize @health_record
   end
 
   # GET /health_records/new
   def new
     @health_record = HealthRecord.new
+    authorize @health_record
   end
 
   # GET /health_records/1/edit
   def edit
+    authorize @health_record
   end
 
   # POST /health_records or /health_records.json
   def create
-    @health_record = HealthRecord.new(health_record_params)
+    @health_record = current_user.health_records.build(health_record_params)
+    authorize @health_record
 
     respond_to do |format|
       if @health_record.save
@@ -36,6 +40,8 @@ class HealthRecordsController < ApplicationController
 
   # PATCH/PUT /health_records/1 or /health_records/1.json
   def update
+    authorize @health_record
+
     respond_to do |format|
       if @health_record.update(health_record_params)
         format.html { redirect_to @health_record, notice: "Health record was successfully updated." }
@@ -49,6 +55,7 @@ class HealthRecordsController < ApplicationController
 
   # DELETE /health_records/1 or /health_records/1.json
   def destroy
+    authorize @health_record
     @health_record.destroy!
 
     respond_to do |format|
@@ -58,13 +65,14 @@ class HealthRecordsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_health_record
-      @health_record = HealthRecord.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def health_record_params
-      params.require(:health_record).permit(:user_id, :notes, :created_at, :updated_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_health_record
+    @health_record = HealthRecord.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def health_record_params
+    params.require(:health_record).permit(:user_id, :notes, :created_at, :updated_at)
+  end
 end

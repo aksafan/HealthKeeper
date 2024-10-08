@@ -3,25 +3,29 @@ class BiomarkersController < ApplicationController
 
   # GET /biomarkers or /biomarkers.json
   def index
-    @biomarkers = Biomarker.all
+    @biomarkers = policy_scope(Biomarker.all)
   end
 
   # GET /biomarkers/1 or /biomarkers/1.json
   def show
+    authorize @biomarker
   end
 
   # GET /biomarkers/new
   def new
     @biomarker = Biomarker.new
+    authorize @biomarker
   end
 
   # GET /biomarkers/1/edit
   def edit
+    authorize @biomarker
   end
 
   # POST /biomarkers or /biomarkers.json
   def create
     @biomarker = Biomarker.new(biomarker_params)
+    authorize @biomarker
 
     respond_to do |format|
       if @biomarker.save
@@ -36,6 +40,8 @@ class BiomarkersController < ApplicationController
 
   # PATCH/PUT /biomarkers/1 or /biomarkers/1.json
   def update
+    authorize @biomarker
+
     respond_to do |format|
       if @biomarker.update(biomarker_params)
         format.html { redirect_to @biomarker, notice: "Biomarker was successfully updated." }
@@ -49,6 +55,7 @@ class BiomarkersController < ApplicationController
 
   # DELETE /biomarkers/1 or /biomarkers/1.json
   def destroy
+    authorize @biomarker
     @biomarker.destroy!
 
     respond_to do |format|

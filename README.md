@@ -44,7 +44,8 @@ TODO
     - [ ] User Story 16: See trends in health data over a defined period.
 3. [x] **Biomarker and Disease Database**
     - [x] User Story 22: Allow users to add their own reference databases.
-4. [ ] **Security**
+4. [x] **Security**
     - [x] Authentication.
-    - [ ] Authorization.
-    - [ ] Role management.
+    - [x] Authorization.
+    - [x] Role management.
+      - [x] Tune role policies.

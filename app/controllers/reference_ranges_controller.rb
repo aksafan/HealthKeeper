@@ -3,25 +3,29 @@ class ReferenceRangesController < ApplicationController
 
   # GET /reference_ranges or /reference_ranges.json
   def index
-    @reference_ranges = ReferenceRange.all
+    @reference_ranges = policy_scope(ReferenceRange.all)
   end
 
   # GET /reference_ranges/1 or /reference_ranges/1.json
   def show
+    authorize @reference_range
   end
 
   # GET /reference_ranges/new
   def new
     @reference_range = ReferenceRange.new
+    authorize @reference_range
   end
 
   # GET /reference_ranges/1/edit
   def edit
+    authorize @reference_range
   end
 
   # POST /reference_ranges or /reference_ranges.json
   def create
     @reference_range = ReferenceRange.new(reference_range_params)
+    authorize @reference_range
 
     respond_to do |format|
       if @reference_range.save
@@ -36,6 +40,8 @@ class ReferenceRangesController < ApplicationController
 
   # PATCH/PUT /reference_ranges/1 or /reference_ranges/1.json
   def update
+    authorize @reference_range
+
     respond_to do |format|
       if @reference_range.update(reference_range_params)
         format.html { redirect_to @reference_range, notice: "Reference range was successfully updated." }
@@ -49,6 +55,7 @@ class ReferenceRangesController < ApplicationController
 
   # DELETE /reference_ranges/1 or /reference_ranges/1.json
   def destroy
+    authorize @reference_range
     @reference_range.destroy!
 
     respond_to do |format|
@@ -58,13 +65,14 @@ class ReferenceRangesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reference_range
-      @reference_range = ReferenceRange.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def reference_range_params
-      params.require(:reference_range).permit(:biomarker_id, :min_value, :max_value, :unit, :source, :created_at, :updated_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reference_range
+    @reference_range = ReferenceRange.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def reference_range_params
+    params.require(:reference_range).permit(:biomarker_id, :min_value, :max_value, :unit, :source, :created_at, :updated_at)
+  end
 end
