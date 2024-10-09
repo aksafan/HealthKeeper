@@ -14,12 +14,14 @@ class BiomarkersController < ApplicationController
   # GET /biomarkers/new
   def new
     @biomarker = Biomarker.new
+    @biomarker.reference_ranges.build
     authorize @biomarker
   end
 
   # GET /biomarkers/1/edit
   def edit
     authorize @biomarker
+    @biomarker.reference_ranges.build if @biomarker.reference_ranges.empty?
   end
 
   # POST /biomarkers or /biomarkers.json
@@ -41,9 +43,11 @@ class BiomarkersController < ApplicationController
   # PATCH/PUT /biomarkers/1 or /biomarkers/1.json
   def update
     authorize @biomarker
+    # @biomarker.update_attributes(biomarker_params)
 
     respond_to do |format|
       if @biomarker.update(biomarker_params)
+      # if @biomarker.save
         format.html { redirect_to @biomarker, notice: "Biomarker was successfully updated." }
         format.json { render :show, status: :ok, location: @biomarker }
       else
@@ -65,13 +69,17 @@ class BiomarkersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_biomarker
-      @biomarker = Biomarker.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def biomarker_params
-      params.require(:biomarker).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_biomarker
+    @biomarker = Biomarker.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def biomarker_params
+    params.require(:biomarker).permit(
+      :name,
+      reference_ranges_attributes: [:id, :min_value, :max_value, :unit, :source],
+    )
+  end
 end

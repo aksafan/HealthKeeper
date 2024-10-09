@@ -1,5 +1,6 @@
 class ReferenceRangesController < ApplicationController
   before_action :set_reference_range, only: %i[ show edit update destroy ]
+  before_action :set_biomarker, only: %i[new create]
 
   # GET /reference_ranges or /reference_ranges.json
   def index
@@ -13,7 +14,7 @@ class ReferenceRangesController < ApplicationController
 
   # GET /reference_ranges/new
   def new
-    @reference_range = ReferenceRange.new
+    @reference_range = @biomarker.reference_ranges.build
     authorize @reference_range
   end
 
@@ -24,12 +25,12 @@ class ReferenceRangesController < ApplicationController
 
   # POST /reference_ranges or /reference_ranges.json
   def create
-    @reference_range = ReferenceRange.new(reference_range_params)
+    @reference_range = @biomarker.reference_ranges.new(reference_range_params)
     authorize @reference_range
 
     respond_to do |format|
       if @reference_range.save
-        format.html { redirect_to @reference_range, notice: "Reference range was successfully created." }
+        format.html { redirect_to @biomarker, notice: "Reference range was successfully created." }
         format.json { render :show, status: :created, location: @reference_range }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,7 +60,7 @@ class ReferenceRangesController < ApplicationController
     @reference_range.destroy!
 
     respond_to do |format|
-      format.html { redirect_to reference_ranges_path, status: :see_other, notice: "Reference range was successfully destroyed." }
+      format.html { redirect_back fallback_location: root_path, status: :see_other, notice: "Reference range was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -69,6 +70,10 @@ class ReferenceRangesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_reference_range
     @reference_range = ReferenceRange.find(params[:id])
+  end
+
+  def set_biomarker
+    @biomarker = Biomarker.find(params[:biomarker_id])
   end
 
   # Only allow a list of trusted parameters through.

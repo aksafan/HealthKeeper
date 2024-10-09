@@ -7,6 +7,6 @@
   <%= link_to "Back to biomarkers", biomarkers_path %>
 
   <% if policy(:biomarker).destroy? %>
-    <%= button_to "Destroy this biomarker", @biomarker, method: :delete %>
+    <%= button_to "Destroy this biomarker", @biomarker, method: :delete, class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
   <% end %>
 </div>

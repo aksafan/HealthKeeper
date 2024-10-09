@@ -2,6 +2,10 @@
 
 <%= render "form", biomarker: @biomarker %>
 
+<div>
+  <%= link_to "Add Reference Range", new_biomarker_reference_range_path(@biomarker) %>
+</div>
+
 <br>
 
 <div>
