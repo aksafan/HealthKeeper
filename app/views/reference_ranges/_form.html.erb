@@ -1,4 +1,4 @@
-<%= form_with(model: reference_range) do |form| %>
+<%= form_with(model: reference_range, url: biomarker_reference_ranges_path, method: :post ) do |form| %>
   <% if reference_range.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(reference_range.errors.count, "error") %> prohibited this reference_range from being saved:</h2>
@@ -10,11 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :biomarker_id, style: "display: block" %>
-    <%= form.text_field :biomarker_id %>
-  </div>
 
   <div>
     <%= form.label :min_value, style: "display: block" %>
@@ -34,16 +29,6 @@
   <div>
     <%= form.label :source, style: "display: block" %>
     <%= form.text_field :source %>
-  </div>
-
-  <div>
-    <%= form.label :created_at, style: "display: block" %>
-    <%= form.datetime_field :created_at %>
-  </div>
-
-  <div>
-    <%= form.label :updated_at, style: "display: block" %>
-    <%= form.datetime_field :updated_at %>
   </div>
 
   <div>
