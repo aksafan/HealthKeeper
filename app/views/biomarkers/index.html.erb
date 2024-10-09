@@ -1,20 +1,63 @@
-<h1>Biomarkers</h1>
+<!--<h1>Biomarkers</h1>-->
 
-<ol id="biomarkers">
-  <% @biomarkers.each do |biomarker| %>
-  <li class="tw-flex tw-items-center tw-m-4 tw-border">
-    <p class="tw-px-2 tw-py-2 tw-m-0">
-      <strong>Name:</strong>
-      <%= biomarker.name %>
-    </p>
-    <p class="tw-px-2 tw-py-2 tw-m-0">
-      <strong>Created at:</strong>
-      <%= format_date biomarker.created_at %>
-    </p>
+<!--<ol id="biomarkers">-->
+  <%# @biomarkers.each do |biomarker| %>
+<!--  <li class="tw-flex tw-items-center tw-m-4 tw-border">-->
+<!--    <p class="tw-px-2 tw-py-2 tw-m-0">-->
+<!--      <strong>Name:</strong>-->
+      <%#= biomarker.name %>
+<!--    </p>-->
+<!--    <p class="tw-px-2 tw-py-2 tw-m-0">-->
+<!--      <strong>Created at:</strong>-->
+      <%#= format_date biomarker.created_at %>
+<!--    </p>-->
 
-    <%= link_to "Show this biomarker", biomarker, class: "tw-no-underline tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
-  </li>
-  <% end %>
-</ol>
+    <%#= link_to "Show this biomarker", biomarker, class: "tw-no-underline tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+<!--  </li>-->
+  <%# end %>
+<!--</ol>-->
 
-<%= link_to "New biomarker", new_biomarker_path %>
+<%#= link_to "New biomarker", new_biomarker_path %>
+
+
+<section>
+
+  <header class="tw-my-2 tw-flex tw-flex-center tw-justify-between tw-items-center">
+    <h1 class="tw-text-lg">Biomarkers</h1>
+    <%= link_to "New biomarker", new_biomarker_path, class: "btn btn-primary" %>
+  </header>
+
+  <div id="new_biomarkers" class="tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:tw-rounded-lg">
+
+    <table class="tw-w-full tw-text-sm tw-text-left tw-text-right tw-rounded-md">
+
+      <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-400 tw-text-center">
+
+      <tr>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Name
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Created date
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Updated date
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          <span class="tw-sr-only">Show</span>
+        </th>
+      </tr>
+
+      </thead>
+
+      <tbody>
+      <% @biomarkers.each do |biomarker| %>
+        <%= render biomarker %>
+      <% end %>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>

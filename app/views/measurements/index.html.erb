@@ -1,12 +1,49 @@
-<h1>Measurements</h1>
+<section>
+  <header class="tw-my-2 tw-flex tw-flex-center tw-justify-between tw-items-center">
+    <h1 class="tw-text-lg">Measurements</h1>
+    <%= link_to "New measurement", new_measurement_path, class: "btn btn-primary" %>
+  </header>
 
-<div id="measurements">
-  <% @measurements.each do |measurement| %>
-    <%= render measurement %>
-    <p>
-      <%= link_to "Show this measurement", measurement %>
-    </p>
-  <% end %>
-</div>
+  <div id="measurements" class="tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:tw-rounded-lg">
 
-<%= link_to "New measurement", new_measurement_path %>
+    <table class="tw-w-full tw-text-sm tw-text-left tw-text-right tw-rounded-md">
+
+      <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-400 tw-text-center">
+
+      <tr>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          User
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Type
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Value
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Source
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Notes
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          Created date
+        </th>
+        <th scope="col" class="tw-px-6 tw-py-3">
+          <span class="tw-sr-only">Show</span>
+        </th>
+      </tr>
+
+      </thead>
+
+      <tbody>
+      <% @measurements.each do |measurement| %>
+        <%= render measurement %>
+      <% end %>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>

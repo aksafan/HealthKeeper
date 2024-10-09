@@ -1,52 +1,15 @@
-<div id="<%= dom_id lab_test %>">
-  <p>
-    <strong>User:</strong>
-    <%= lab_test.user_id %>
-  </p>
+<tr id="<%= dom_id lab_test %>" class="tw-bg-white tw-border-b tw-bg-white tw-border-gray-300 tw-hover:bg-gray-700 tw-text-center">
+  <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:tw-text-white">
+    <%= lab_test.user.full_name %>
+  </th>
+  <td class="tw-px-6 tw-py-4">
+    <%= lab_test.biomarker.name %>
+  </td>
+  <td class="tw-px-6 tw-py-4">
+    <%= format_date lab_test.created_at %>
+  </td>
+  <td class="tw-px-6 tw-py-4 tw-text-center">
 
-  <p>
-    <strong>Biomarker:</strong>
-    <%= lab_test.biomarker_id %>
-  </p>
-
-  <p>
-    <strong>Value:</strong>
-    <%= lab_test.value %>
-  </p>
-
-  <p>
-    <strong>Unit:</strong>
-    <%= lab_test.unit %>
-  </p>
-
-  <p>
-    <strong>Reference range:</strong>
-    <%= lab_test.reference_range_id %>
-  </p>
-
-  <p>
-    <strong>Recordable type:</strong>
-    <%= lab_test.recordable_type %>
-  </p>
-
-  <p>
-    <strong>Recordable:</strong>
-    <%= lab_test.recordable_id %>
-  </p>
-
-  <p>
-    <strong>Notes:</strong>
-    <%= lab_test.notes %>
-  </p>
-
-  <p>
-    <strong>Created at:</strong>
-    <%= lab_test.created_at %>
-  </p>
-
-  <p>
-    <strong>Updated at:</strong>
-    <%= lab_test.updated_at %>
-  </p>
-
-</div>
+    <%= link_to "Show this lab test", lab_test, class: "tw-font-medium tw-text-blue-600 tw-dark:tw-text-blue-500 tw-hover:tw-underline" %>
+  </td>
+</tr>

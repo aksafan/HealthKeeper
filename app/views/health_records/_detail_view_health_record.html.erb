@@ -1,0 +1,110 @@
+<div id="<%= dom_id health_record %>" class="tw-border-double tw-shadow-lg tw-ring-4 tw-rounded-lg">
+  <div class="tw-m-8">
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Full Name:</strong>
+      <%= health_record.user.full_name %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Notes:</strong>
+      <%= health_record.notes %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Created at:</strong>
+      <%= format_date health_record.created_at %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Updated at:</strong>
+      <%= format_date health_record.updated_at %>
+    </p>
+
+    <div class="tw-flex tw-flex-row tw-space-x-4">
+      <% health_record.measurements.each do |measurement| %>
+        <div class="tw-basis-1/3 tw-ring-2 tw-rounded-lg tw-p-4 tw-mb-4 tw-bg-yellow-200">
+
+          <p>
+            <strong>Measurement Type:</strong>
+            <%= measurement.measurement_type %>
+          </p>
+
+          <p>
+            <strong>Value:</strong>
+            <%= "#{measurement.value} #{measurement.unit}" %>
+          </p>
+
+          <p>
+            <strong>Source:</strong>
+            <%= measurement.source %>
+          </p>
+
+          <p>
+            <strong>Notes:</strong>
+            <%= measurement.notes %>
+          </p>
+
+          <p>
+            <strong>Created at:</strong>
+            <%= format_date measurement.created_at %>
+          </p>
+
+          <p>
+            <strong>Updated at:</strong>
+            <%= format_date measurement.updated_at %>
+          </p>
+
+          <% if policy(:measurement).destroy? %>
+            <%= button_to "Destroy this Measurement", measurement, method: :delete, class: "tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+          <% end %>
+
+        </div>
+      <% end %>
+    </div>
+
+    <div class="tw-flex tw-flex-row tw-space-x-4">
+      <% health_record.lab_tests.each do |lab_test| %>
+        <div class="tw-basis-1/3 tw-ring-2 tw-rounded-lg tw-p-4 tw-mb-4 tw-bg-teal-500">
+
+          <p>
+            <strong>Biomarker Name:</strong>
+            <%= lab_test.biomarker.name %>
+          </p>
+
+          <p>
+            <strong>Value:</strong>
+            <%= format_biomarker_value(lab_test.value, lab_test.unit) %>
+          </p>
+
+          <p>
+            <strong>Reference range:</strong>
+            <%= format_reference_range(lab_test.reference_range.min_value, lab_test.reference_range.max_value, lab_test.reference_range.unit) %>
+          </p>
+
+          <p>
+            <strong>Notes:</strong>
+            <%= lab_test.notes %>
+          </p>
+
+          <p>
+            <strong>Created at:</strong>
+            <%= format_date lab_test.created_at %>
+          </p>
+
+          <p>
+            <strong>Updated at:</strong>
+            <%= format_date lab_test.updated_at %>
+          </p>
+
+          <% if policy(:lab_test).destroy? %>
+            <%= button_to "Destroy this Lab Test", lab_test, method: :delete, class: "tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+          <% end %>
+
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+</div>

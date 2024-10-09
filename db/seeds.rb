@@ -110,6 +110,8 @@ end
 # Create Measurements
 puts "Creating Measurements..."
 measurement_types = { height: 0, weight: 1, chest: 2, waist: 3, hips: 4, wrist: 5 }
+weight_unit = { kg: "kg", lb: "lb" }
+height_unit = { cm: "cm", ft: "ft" }
 
 health_records.each do |health_record|
   2.times do
@@ -117,6 +119,15 @@ health_records.each do |health_record|
     Measurement.create!(
       user: health_record.user,
       measurement_type: enum_value,
+      unit: case type
+             when :height then height_unit.to_a.sample[0]
+             when :weight then weight_unit.to_a.sample[0]
+             when :chest then height_unit.to_a.sample[0]
+             when :waist then height_unit.to_a.sample[0]
+             when :hips then height_unit.to_a.sample[0]
+             when :wrist then height_unit.to_a.sample[0]
+             else height_unit.to_a.sample[0]
+             end,
       value: case type
              when :height then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
              when :weight then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in kg
