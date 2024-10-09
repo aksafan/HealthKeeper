@@ -59,8 +59,8 @@ biomarker_records.each do |biomarker|
   sources.sample(2).each do |source|
     ReferenceRange.create!(
       biomarker: biomarker,
-      min_value: Faker::Number.between(from: 50.0, to: 100.0),
-      max_value: Faker::Number.between(from: 101.0, to: 200.0),
+      min_value: format('%<num>0.2f', num: Faker::Number.between(from: 50.0, to: 100.0)),
+      max_value: format('%<num>0.2f', num: Faker::Number.between(from: 101.0, to: 200.0)),
       unit: case biomarker.name
             when "Glucose" then "mg/dL"
             when "Hemoglobin" then "g/dL"

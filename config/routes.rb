@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  resources :biomarkers do
+    resources :reference_ranges, only: [:show, :new, :create, :edit, :update, :destroy]
+  end
   resources :reference_ranges
+
   resources :measurements
   resources :lab_tests
-  resources :biomarkers
   resources :health_records
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

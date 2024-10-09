@@ -1,0 +1,22 @@
+<%= form.fields_for :reference_ranges do |reference_range| %>
+  <div>
+    <%= reference_range.label :min_value, style: "display: block" %>
+    <%= reference_range.text_field :min_value %>
+  </div>
+
+  <div>
+    <%= reference_range.label :max_value, style: "display: block" %>
+    <%= reference_range.text_field :max_value %>
+  </div>
+
+  <div>
+    <%= reference_range.label :unit, style: "display: block" %>
+    <%= reference_range.text_field :unit %>
+  </div>
+
+  <div>
+    <%= reference_range.label :source, style: "display: block" %>
+    <%= reference_range.text_field :source %>
+  </div>
+  -----------------------------------------------
+<% end %>

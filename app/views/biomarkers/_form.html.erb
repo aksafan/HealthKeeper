@@ -15,6 +15,13 @@
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
   </div>
+  -----------------------------------------------
+
+  <p>
+    <strong>Reference ranges:</strong>
+  </p>
+
+  <%= render "reference_ranges_form", form: form %>
 
   <div>
     <%= form.submit %>
