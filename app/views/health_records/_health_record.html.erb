@@ -1,22 +1,17 @@
-<div id="<%= dom_id health_record %>">
-  <p>
-    <strong>User:</strong>
-    <%= health_record.user_id %>
-  </p>
-
-  <p>
-    <strong>Notes:</strong>
+<tr id="<%= dom_id health_record %>" class="tw-bg-white tw-border-b tw-bg-white tw-border-gray-300 tw-hover:bg-gray-700 tw-text-center">
+  <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:tw-text-white">
+    <%= health_record.user.full_name %>
+  </th>
+  <td class="tw-px-2 tw-py-2 tw-text-ellipsis tw-overflow-hidden tw-max-w-20 tw-whitespace-nowrap">
     <%= health_record.notes %>
-  </p>
-
-  <p>
-    <strong>Created at:</strong>
-    <%= health_record.created_at %>
-  </p>
-
-  <p>
-    <strong>Updated at:</strong>
-    <%= health_record.updated_at %>
-  </p>
-
-</div>
+  </td>
+  <td class="tw-px-6 tw-py-4">
+    <%= format_date health_record.created_at %>
+  </td>
+  <td class="tw-px-6 tw-py-4">
+    <%= format_date health_record.updated_at %>
+  </td>
+  <td class="tw-px-6 tw-py-4 tw-text-center">
+    <%= link_to "Show details", health_record, class: "tw-font-medium tw-text-blue-600 tw-dark:tw-text-blue-500 tw-hover:tw-underline" %>
+  </td>
+</tr>

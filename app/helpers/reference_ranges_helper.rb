@@ -1,5 +1,5 @@
 module ReferenceRangesHelper
-  def format_range(range_value, range_unit)
-    "#{format('%<num>0.2f', num: range_value)} #{range_unit}"
+  def format_reference_range(min, max, unit)
+    "#{min} - #{max} #{unit}"
   end
 end

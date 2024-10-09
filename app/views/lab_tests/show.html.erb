@@ -1,8 +1,8 @@
-<%= render @lab_test %>
+<%= render "detail_view_lab_test", lab_test: @lab_test %>
 
 <div>
   <%= link_to "Edit this lab test", edit_lab_test_path(@lab_test) %> |
   <%= link_to "Back to lab tests", lab_tests_path %>
 
-  <%= button_to "Destroy this lab test", @lab_test, method: :delete %>
+  <%= button_to "Destroy this lab test", @lab_test, method: :delete, class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
 </div>
