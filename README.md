@@ -2,9 +2,9 @@
 
 ## Installation
 
-1. Install Ruby `>=3.2.1`.
+1. Install Ruby `3.2.1`.
 2. Create `.env` file in root folder of the project.
-2. Install [PostgreSQL](https://www.postgresql.org/download/).
+2. Install [PostgreSQL](https://www.postgresql.org/download/) `>=14.13`.
 3. Add corresponded env vars to `.env` file with DB credentials. E.g.:
 ```
 HEALTHKEEPER_DEVELOPMENT_DATABASE = "healthkeeper_development"
@@ -15,8 +15,9 @@ HEALTHKEEPER_TEST_DATABASE = "healthkeeper_test"
 HEALTHKEEPER_TEST_DATABASE_USERNAME = "healthkeeper"
 HEALTHKEEPER_TEST_DATABASE_PASSWORD = "magic"
 ```
-4. Run `rails db:setup`.
-5. In order to recreate DB run `rails db:reset`.
+4. Run `./bin/bundle install`
+5. Run `rails db:setup`.
+6. In order to recreate DB run `rails db:reset`.
 7. In order to (re)populate DB with a testing data run `rails db:seed`.
 8. To run Rails server use `./bin/dev` instead of `rails s`/`rails server` (see [next chapter](#bootstrap-and-tailwindCSS) if curious why).
 
@@ -37,9 +38,9 @@ TODO
 ### **High Priority**
 
 1. [ ] **Health Data Management**
-    - [x] User Story 1: Manual input of blood test results.
+    - [ ] User Story 1: Manual input of blood test results.
     - [ ] User Story 2: Import health data from PDF files.
-    - [ ] User Story 4: Display health data with color-coded references.
+    - [x] User Story 4: Display health data with color-coded references.
 2. [ ] **User Interface and Experience**
     - [ ] User Story 16: See trends in health data over a defined period.
 3. [x] **Biomarker and Disease Database**
@@ -49,3 +50,4 @@ TODO
     - [x] Authorization.
     - [x] Role management.
       - [x] Tune role policies.
+5. [ ] Wrap an app in Docker.
