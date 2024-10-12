@@ -1,15 +1,36 @@
-<tr id="<%= dom_id lab_test %>" class="tw-bg-white tw-border-b tw-bg-white tw-border-gray-300 tw-hover:bg-gray-700 tw-text-center">
-  <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:tw-text-white">
-    <%= lab_test.user.full_name %>
-  </th>
-  <td class="tw-px-6 tw-py-4">
-    <%= lab_test.biomarker.name %>
-  </td>
-  <td class="tw-px-6 tw-py-4">
-    <%= format_date lab_test.created_at %>
-  </td>
-  <td class="tw-px-6 tw-py-4 tw-text-center">
+<div id="<%= dom_id lab_test %>" class="tw-border-double tw-shadow-lg tw-ring-4 tw-rounded-lg">
+  <div class="tw-m-8">
 
-    <%= link_to "Show this lab test", lab_test, class: "tw-font-medium tw-text-blue-600 tw-dark:tw-text-blue-500 tw-hover:tw-underline" %>
-  </td>
-</tr>
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Biomarker Name:</strong>
+      <%= lab_test.biomarker.name %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Value:</strong>
+      <%= format_biomarker_value(lab_test.value, lab_test.unit) %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Reference range:</strong>
+      <%= format_reference_range(lab_test.reference_range.min_value, lab_test.reference_range.max_value, lab_test.reference_range.unit) %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Notes:</strong>
+      <%= lab_test.notes %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Created at:</strong>
+      <%= format_date_with_time lab_test.created_at %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Updated at:</strong>
+      <%= format_date_with_time lab_test.updated_at %>
+    </p>
+
+  </div>
+
+</div>

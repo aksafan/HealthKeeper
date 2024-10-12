@@ -1,0 +1,30 @@
+<tbody>
+<% biomarkers.each do |biomarker| %>
+  <tr id="<%= dom_id biomarker %>" class="tw-bg-white tw-border-b tw-bg-white tw-border-gray-300 tw-hover:bg-gray-700 tw-text-left">
+    <td class="tw-px-6 tw-py-4">
+      <%= biomarker.name %>
+    </td>
+    <td class="tw-px-6 tw-py-4">
+      <%= format_reference_range(biomarker.reference_ranges.first.min_value, biomarker.reference_ranges.first.max_value, biomarker.reference_ranges.first.unit) %>
+    </td>
+    <% recordables.each do |recordable| %>
+      <% lab_test = biomarker.lab_tests.find_by(recordable_id: recordable.recordable_id) %>
+      <% if lab_test %>
+        <td class="tw-px-6 tw-py-4<%= " tw-bg-red-500" unless lab_test.value.between?(biomarker.reference_ranges.first.min_value, biomarker.reference_ranges.first.max_value) %>">
+          <div class="tw-flex">
+            <%= format_biomarker_value lab_test.value, lab_test.unit %>
+            <%= link_to lab_test do %>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+              </svg>
+            <% end %>
+          </div>
+        </td>
+      <% else %>
+        <td class="tw-px-6 tw-py-4"></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <%#= render lab_test, health_record_id: health_record_id %>
+<% end %>
+</tbody>
