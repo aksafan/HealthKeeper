@@ -13,12 +13,12 @@
 
     <p class="tw-pt-2 tw-pr-6">
       <strong>Created at:</strong>
-      <%= format_date health_record.created_at %>
+      <%= format_date_with_time health_record.created_at %>
     </p>
 
     <p class="tw-pt-2 tw-pr-6">
       <strong>Updated at:</strong>
-      <%= format_date health_record.updated_at %>
+      <%= format_date_with_time health_record.updated_at %>
     </p>
 
     <div class="tw-flex tw-flex-row tw-space-x-4">
@@ -47,12 +47,12 @@
 
           <p>
             <strong>Created at:</strong>
-            <%= format_date measurement.created_at %>
+            <%= format_date_with_time measurement.created_at %>
           </p>
 
           <p>
             <strong>Updated at:</strong>
-            <%= format_date measurement.updated_at %>
+            <%= format_date_with_time measurement.updated_at %>
           </p>
 
           <% if policy(:measurement).destroy? %>
@@ -89,12 +89,12 @@
 
           <p>
             <strong>Created at:</strong>
-            <%= format_date lab_test.created_at %>
+            <%= format_date_with_time lab_test.created_at %>
           </p>
 
           <p>
             <strong>Updated at:</strong>
-            <%= format_date lab_test.updated_at %>
+            <%= format_date_with_time lab_test.updated_at %>
           </p>
 
           <% if policy(:lab_test).destroy? %>
