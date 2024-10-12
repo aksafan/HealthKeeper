@@ -1,0 +1,17 @@
+<thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-400 tw-text-left">
+
+<tr>
+  <th scope="col" class="tw-px-6 tw-py-3">
+    Biomarker
+  </th>
+  <th scope="col" class="tw-px-6 tw-py-3">
+    Reference range
+  </th>
+  <% recordables.each do |recordable| %>
+    <th scope="col" class="tw-px-6 tw-py-3">
+      <%= format_date recordable.created_at %>
+    </th>
+  <% end %>
+</tr>
+
+</thead>

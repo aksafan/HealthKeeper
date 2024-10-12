@@ -3,7 +3,8 @@ class LabTestsController < ApplicationController
 
   # GET /lab_tests or /lab_tests.json
   def index
-    @lab_tests = policy_scope(LabTest.all)
+    @recordables = policy_scope(LabTest).select(:recordable_id, :created_at).order(:created_at).group(:recordable_id, :created_at)
+    @biomarkers = policy_scope(Biomarker).includes(:reference_ranges, :lab_tests).where(lab_tests: { user_id: current_user.id })
   end
 
   # GET /lab_tests/1 or /lab_tests/1.json
