@@ -6,10 +6,10 @@
     <%= health_record.notes %>
   </td>
   <td class="tw-px-6 tw-py-4">
-    <%= format_date health_record.created_at %>
+    <%= format_date_with_time health_record.created_at %>
   </td>
   <td class="tw-px-6 tw-py-4">
-    <%= format_date health_record.updated_at %>
+    <%= format_date_with_time health_record.updated_at %>
   </td>
   <td class="tw-px-6 tw-py-4 tw-text-center">
     <%= link_to "Show details", health_record, class: "tw-font-medium tw-text-blue-600 tw-dark:tw-text-blue-500 tw-hover:tw-underline" %>

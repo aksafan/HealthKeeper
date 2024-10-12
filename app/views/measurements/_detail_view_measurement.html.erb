@@ -28,12 +28,12 @@
 
     <p class="tw-pt-2 tw-pr-6">
         <strong>Created at:</strong>
-        <%= format_date measurement.created_at %>
+        <%= format_date_with_time measurement.created_at %>
       </p>
 
     <p class="tw-pt-2 tw-pr-6">
         <strong>Updated at:</strong>
-        <%= format_date measurement.updated_at %>
+        <%= format_date_with_time measurement.updated_at %>
       </p>
 
       <% if policy(:measurement).destroy? %>

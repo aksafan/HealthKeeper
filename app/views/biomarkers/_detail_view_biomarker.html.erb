@@ -26,12 +26,12 @@
 
           <p>
             <strong>Created at:</strong>
-            <%= format_date reference_range.created_at %>
+            <%= format_date_with_time reference_range.created_at %>
           </p>
 
           <p>
             <strong>Updated at:</strong>
-            <%= format_date reference_range.updated_at %>
+            <%= format_date_with_time reference_range.updated_at %>
           </p>
 
           <% if policy(:reference_range).destroy? %>

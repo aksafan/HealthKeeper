@@ -15,7 +15,7 @@
     <%= measurement.notes %>
   </td>
   <td class="tw-px-6 tw-py-4">
-    <%= format_date measurement.created_at %>
+    <%= format_date_with_time measurement.created_at %>
   </td>
   <td class="tw-px-6 tw-py-4 tw-items-center">
     <%= link_to "Show this measurement", measurement, class: "tw-font-medium tw-text-blue-600 tw-dark:tw-text-blue-500 tw-hover:tw-underline" %>
