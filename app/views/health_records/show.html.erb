@@ -1,8 +1,47 @@
-<%= render "detail_view_health_record", health_record: @health_record %>
+<div id="<%= dom_id @health_record %>" class="tw-border-double tw-shadow-lg tw-ring-4 tw-pb-0.5 tw-mb-2 tw-rounded-lg">
+  <div class="tw-m-8">
 
-<div>
-  <%= link_to "Edit this health record", edit_health_record_path(@health_record) %> |
-  <%= link_to "Back to health records", health_records_path %>
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Full Name:</strong>
+      <%= @health_record.user.full_name %>
+    </p>
 
-  <%= button_to "Destroy this Health Record", @health_record, method: :delete, class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Notes:</strong>
+      <%= @health_record.notes %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Created at:</strong>
+      <%= format_date_with_time @health_record.created_at %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Updated at:</strong>
+      <%= format_date_with_time @health_record.updated_at %>
+    </p>
+
+    <div>
+      <%= link_to "Edit this health record", edit_health_record_path(@health_record) %> |
+      <%= link_to "Back to health records", health_records_path %>
+
+      <%= button_to(
+            "Remove this Health Record",
+            @health_record,
+            method: :delete,
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+            class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+          ) %>
+    </div>
+
+    <% unless @health_record.measurements.empty? %>
+      <%= render "detail_view_measurements", health_record: @health_record %>
+    <% end %>
+
+    <% unless @health_record.lab_tests.empty? %>
+      <%= render "detail_view_lab_tests", health_record: @health_record %>
+    <% end %>
+
+  </div>
+
 </div>

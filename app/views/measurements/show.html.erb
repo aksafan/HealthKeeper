@@ -4,5 +4,11 @@
   <%= link_to "Edit this measurement", edit_measurement_path(@measurement) %> |
   <%= link_to "Back to measurements", measurements_path %>
 
-  <%= button_to "Destroy this measurement", @measurement, method: :delete, class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+  <%= button_to(
+        "Remove this measurement",
+        @measurement,
+        method: :delete,
+        data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+        class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+      ) %>
 </div>

@@ -1,12 +1,18 @@
 <%= render @reference_range %>
 
 <div>
-  <% if policy(:reference_range).edit? %>
+  <% if policy(@reference_range).edit? %>
     <%= link_to "Edit this reference range", edit_biomarker_reference_range_path(@reference_range) %> |
   <% end %>
   <%= link_to "Back to reference ranges", reference_ranges_path(@biomarker) %>
 
-  <% if policy(:reference_range).destroy? %>
-    <%= button_to "Destroy this reference range", @reference_range, method: :delete %>
+  <% if policy(@reference_range).destroy? %>
+    <%= button_to(
+          "Remove this reference range",
+          @reference_range,
+          method: :delete,
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+          class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+        ) %>
     <% end %>
 </div>

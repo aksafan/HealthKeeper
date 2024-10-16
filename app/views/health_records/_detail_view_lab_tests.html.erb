@@ -1,0 +1,47 @@
+<div class="tw-grid tw-grid-cols-3 tw-gap-4">
+  <% health_record.lab_tests.each do |lab_test| %>
+    <div class="tw-ring-2 tw-rounded-lg tw-p-4 tw-bg-teal-500">
+
+      <p>
+        <strong>Biomarker Name:</strong>
+        <%= lab_test.biomarker.name %>
+      </p>
+
+      <p>
+        <strong>Value:</strong>
+        <%= format_biomarker_value(lab_test.value, lab_test.unit) %>
+      </p>
+
+      <p>
+        <strong>Reference range:</strong>
+        <%= format_reference_range(lab_test.reference_range.min_value, lab_test.reference_range.max_value, lab_test.reference_range.unit) %>
+      </p>
+
+      <p>
+        <strong>Notes:</strong>
+        <%= lab_test.notes %>
+      </p>
+
+      <p>
+        <strong>Created at:</strong>
+        <%= format_date_with_time lab_test.created_at %>
+      </p>
+
+      <p>
+        <strong>Updated at:</strong>
+        <%= format_date_with_time lab_test.updated_at %>
+      </p>
+
+      <% if policy(lab_test).destroy? %>
+        <%= button_to(
+              "Remove this Lab Test",
+              lab_test,
+              method: :delete,
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+            ) %>
+      <% end %>
+
+    </div>
+  <% end %>
+</div>

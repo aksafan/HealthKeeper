@@ -60,7 +60,7 @@ class ReferenceRangesController < ApplicationController
     @reference_range.destroy!
 
     respond_to do |format|
-      format.html { redirect_back fallback_location: root_path, status: :see_other, notice: "Reference range was successfully destroyed." }
+      format.html { redirect_back_or_to reference_range_path, status: :see_other, notice: "Reference range was successfully removed." }
       format.json { head :no_content }
     end
   end

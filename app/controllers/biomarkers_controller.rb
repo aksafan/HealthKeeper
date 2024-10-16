@@ -63,7 +63,7 @@ class BiomarkersController < ApplicationController
     @biomarker.destroy!
 
     respond_to do |format|
-      format.html { redirect_to biomarkers_path, status: :see_other, notice: "Biomarker was successfully destroyed." }
+      format.html { redirect_to biomarkers_path, status: :see_other, notice: "Biomarker was successfully removed." }
       format.json { head :no_content }
     end
   end

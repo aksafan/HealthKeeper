@@ -1,0 +1,47 @@
+<div class="tw-grid tw-grid-cols-3 tw-gap-4">
+  <% health_record.measurements.each do |measurement| %>
+    <div class="tw-ring-2 tw-rounded-lg tw-p-4 tw-mb-4 tw-bg-yellow-200">
+
+      <p>
+        <strong>Measurement Type:</strong>
+        <%= measurement.measurement_type %>
+      </p>
+
+      <p>
+        <strong>Value:</strong>
+        <%= "#{measurement.value} #{measurement.unit}" %>
+      </p>
+
+      <p>
+        <strong>Source:</strong>
+        <%= measurement.source %>
+      </p>
+
+      <p>
+        <strong>Notes:</strong>
+        <%= measurement.notes %>
+      </p>
+
+      <p>
+        <strong>Created at:</strong>
+        <%= format_date_with_time measurement.created_at %>
+      </p>
+
+      <p>
+        <strong>Updated at:</strong>
+        <%= format_date_with_time measurement.updated_at %>
+      </p>
+
+      <% if policy(measurement).destroy? %>
+        <%= button_to(
+              "Remove this Measurement",
+              measurement,
+              method: :delete,
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+            ) %>
+      <% end %>
+
+    </div>
+  <% end %>
+</div>

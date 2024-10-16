@@ -12,16 +12,11 @@
   <% end %>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
     <%= form.label :notes, style: "display: block" %>
     <%= form.text_area :notes %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: "tw-my-4 tw-bg-blue-500  tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
   </div>
 <% end %>
