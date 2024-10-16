@@ -34,8 +34,14 @@
             <%= format_date_with_time reference_range.updated_at %>
           </p>
 
-          <% if policy(:reference_range).destroy? %>
-            <%= button_to "Destroy this Reference Range", reference_range, method: :delete, class: "tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+          <% if policy(reference_range).destroy? %>
+            <%= button_to(
+                  "Remove this Reference Range",
+                  reference_range,
+                  method: :delete,
+                  data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                  class: "tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+                ) %>
           <% end %>
 
         </div>

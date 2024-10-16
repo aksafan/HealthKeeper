@@ -59,7 +59,11 @@ class MeasurementsController < ApplicationController
     @measurement.destroy!
 
     respond_to do |format|
-      format.html { redirect_to measurements_path, status: :see_other, notice: "Measurement was successfully destroyed." }
+      if request.referer == measurement_url
+        format.html { redirect_to measurements_path, status: :see_other, notice: "Measurement was successfully removed." }
+      else
+        format.html { redirect_back_or_to measurement_path, status: :see_other, notice: "Measurement was successfully removed." }
+      end
       format.json { head :no_content }
     end
   end

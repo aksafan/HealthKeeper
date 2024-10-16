@@ -36,8 +36,8 @@
         <%= format_date_with_time measurement.updated_at %>
       </p>
 
-      <% if policy(:measurement).destroy? %>
-        <%= button_to "Destroy this Measurement", measurement, method: :delete, class: "tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+      <% if policy(measurement).destroy? %>
+        <%= button_to "Remove this Measurement", measurement, method: :delete, class: "tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
       <% end %>
 
   </div>

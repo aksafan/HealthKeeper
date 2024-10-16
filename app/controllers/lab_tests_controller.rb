@@ -60,7 +60,11 @@ class LabTestsController < ApplicationController
     @lab_test.destroy!
 
     respond_to do |format|
-      format.html { redirect_to lab_tests_path, status: :see_other, notice: "Lab test was successfully destroyed." }
+      if request.referer == lab_test_url
+        format.html { redirect_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
+      else
+        format.html { redirect_back_or_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
+      end
       format.json { head :no_content }
     end
   end

@@ -1,12 +1,18 @@
 <%= render "detail_view_biomarker", biomarker: @biomarker %>
 
 <div>
-  <% if policy(:biomarker).edit? %>
+  <% if policy(@biomarker).edit? %>
     <%= link_to "Edit this biomarker", edit_biomarker_path(@biomarker) %> |
   <% end %>
   <%= link_to "Back to biomarkers", biomarkers_path %>
 
-  <% if policy(:biomarker).destroy? %>
-    <%= button_to "Destroy this biomarker", @biomarker, method: :delete, class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+  <% if policy(@biomarker).destroy? %>
+    <%= button_to(
+          "Remove this biomarker",
+          @biomarker,
+          method: :delete,
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+          class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+        ) %>
   <% end %>
 </div>
