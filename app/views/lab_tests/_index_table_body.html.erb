@@ -8,7 +8,7 @@
       <%= format_reference_range(biomarker.reference_ranges.first.min_value, biomarker.reference_ranges.first.max_value, biomarker.reference_ranges.first.unit) %>
     </td>
     <% recordables.each do |recordable| %>
-      <% lab_test = biomarker.lab_tests.find_by(recordable_id: recordable.recordable_id) %>
+      <% lab_test = biomarker.lab_tests.find { |lt| lt.recordable_id == recordable.recordable_id } %>
       <% if lab_test %>
         <td class="tw-px-6 tw-py-4<%= " tw-bg-red-500" unless lab_test.value.between?(biomarker.reference_ranges.first.min_value, biomarker.reference_ranges.first.max_value) %>">
           <div class="tw-flex">
