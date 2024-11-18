@@ -21,10 +21,9 @@ default: &default
 
 development:
   <<: *default
-  database: healthkeeper_development
-  username: healthkeeper
-  password: <%= ENV["HEALTHKEEPER_DATABASE_PASSWORD"] %>
-
+  database: <%= ENV["HEALTHKEEPER_DEVELOPMENT_DATABASE"] %>
+  username: <%= ENV["HEALTHKEEPER_DEVELOPMENT_DATABASE_USERNAME"] %>
+  password: <%= ENV["HEALTHKEEPER_DEVELOPMENT_DATABASE_PASSWORD"] %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -58,9 +57,9 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: healthkeeper_test
-  username: healthkeeper
-  password: <%= ENV["HEALTHKEEPER_DATABASE_PASSWORD"] %>
+  database: <%= ENV["HEALTHKEEPER_TEST_DATABASE"] %>
+  username: <%= ENV["HEALTHKEEPER_TEST_DATABASE_USERNAME"] %>
+  password: <%= ENV["HEALTHKEEPER_TEST_DATABASE_PASSWORD"] %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
