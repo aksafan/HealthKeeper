@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+
   before_action :authenticate_user!
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  include Pundit::Authorization
-
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   protected
 
@@ -27,5 +28,11 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:alert] = 'You are not authorized to perform this action.'
     redirect_back_or_to(root_path)
+  end
+
+  def record_not_found(e)
+    Rails.logger.debug("Entity #{e.model} with id #{e.id} is not found.")
+
+    render :file => "#{::Rails.root}/public/404.html",  :status => 404
   end
 end

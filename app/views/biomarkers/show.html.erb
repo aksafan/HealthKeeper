@@ -1,8 +1,12 @@
 <%= render @biomarker %>
 
 <div>
-  <%= link_to "Edit this biomarker", edit_biomarker_path(@biomarker) %> |
+  <% if policy(:biomarker).edit? %>
+    <%= link_to "Edit this biomarker", edit_biomarker_path(@biomarker) %> |
+  <% end %>
   <%= link_to "Back to biomarkers", biomarkers_path %>
 
-  <%= button_to "Destroy this biomarker", @biomarker, method: :delete %>
+  <% if policy(:biomarker).destroy? %>
+    <%= button_to "Destroy this biomarker", @biomarker, method: :delete %>
+  <% end %>
 </div>

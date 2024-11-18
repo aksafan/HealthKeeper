@@ -38,16 +38,16 @@ TODO
 ### **High Priority**
 
 1. [ ] **Health Data Management**
-    - [ ] User Story 1: Manual input of blood test results.
-    - [ ] User Story 2: Import health data from PDF files.
-    - [x] User Story 4: Display health data with color-coded references.
+   - [ ] User Story 1: Manual input of blood test results.
+   - [ ] User Story 2: Import health data from PDF files.
+   - [x] User Story 4: Display health data with color-coded references.
 2. [ ] **User Interface and Experience**
-    - [ ] User Story 16: See trends in health data over a defined period.
+   - [ ] User Story 16: See trends in health data over a defined period.
 3. [x] **Biomarker and Disease Database**
-    - [x] User Story 22: Allow users to add their own reference databases.
+   - [x] User Story 22: Allow users to add their own reference databases.
 4. [x] **Security**
-    - [x] Authentication.
-    - [x] Authorization.
-    - [x] Role management.
-        - [x] Tune role policies.
+   - [x] Authentication.
+   - [x] Authorization.
+   - [x] Role management.
+      - [x] Tune role policies.
 5. [ ] Wrap an app in Docker.

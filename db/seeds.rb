@@ -21,6 +21,28 @@ end
 
 users = User.all
 
+# Assign roles to existing users
+puts "Assign roles to existing users..."
+users.each_with_index do |user, i|
+  if i == 0
+    user.add_role User::Roles::ADMIN
+
+    next
+  end
+
+  if i == 1
+    user.add_role User::Roles::DOCTOR
+
+    next
+  end
+
+  if i == 2
+    user.add_role User::Roles::HEALTH_COACH
+
+    next
+  end
+end
+
 # Create Biomarkers
 puts "Creating Biomarkers..."
 biomarkers = ["Glucose", "Hemoglobin", "Cholesterol", "Triglycerides", "Vitamin D"]
@@ -112,3 +134,8 @@ health_records.each do |health_record|
 end
 
 puts "Seeding completed successfully!"
+
+puts "Admin role user credentials: email: \"#{users[0].email}\" and password: \"#{'password'}\""
+puts "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"#{'password'}\""
+puts "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"#{'password'}\""
+puts "User role user credentials: email: \"#{users[3].email}\" and password: \"#{'password'}\""

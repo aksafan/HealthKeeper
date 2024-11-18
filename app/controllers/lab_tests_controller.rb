@@ -3,25 +3,29 @@ class LabTestsController < ApplicationController
 
   # GET /lab_tests or /lab_tests.json
   def index
-    @lab_tests = LabTest.all
+    @lab_tests = policy_scope(LabTest.all)
   end
 
   # GET /lab_tests/1 or /lab_tests/1.json
   def show
+    authorize @lab_test
   end
 
   # GET /lab_tests/new
   def new
     @lab_test = LabTest.new
+    authorize @lab_test
   end
 
   # GET /lab_tests/1/edit
   def edit
+    authorize @lab_test
   end
 
   # POST /lab_tests or /lab_tests.json
   def create
-    @lab_test = LabTest.new(lab_test_params)
+    @lab_test = current_user.lab_tests.build(lab_test_params)
+    authorize @lab_test
 
     respond_to do |format|
       if @lab_test.save
@@ -36,6 +40,8 @@ class LabTestsController < ApplicationController
 
   # PATCH/PUT /lab_tests/1 or /lab_tests/1.json
   def update
+    authorize @lab_test
+
     respond_to do |format|
       if @lab_test.update(lab_test_params)
         format.html { redirect_to @lab_test, notice: "Lab test was successfully updated." }
@@ -49,6 +55,7 @@ class LabTestsController < ApplicationController
 
   # DELETE /lab_tests/1 or /lab_tests/1.json
   def destroy
+    authorize @lab_test
     @lab_test.destroy!
 
     respond_to do |format|
@@ -58,13 +65,14 @@ class LabTestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lab_test
-      @lab_test = LabTest.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def lab_test_params
-      params.require(:lab_test).permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lab_test
+    @lab_test = LabTest.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def lab_test_params
+    params.require(:lab_test).permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+  end
 end

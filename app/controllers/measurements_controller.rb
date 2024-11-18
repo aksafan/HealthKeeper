@@ -3,25 +3,29 @@ class MeasurementsController < ApplicationController
 
   # GET /measurements or /measurements.json
   def index
-    @measurements = Measurement.all
+    @measurements = policy_scope(Measurement.all)
   end
 
   # GET /measurements/1 or /measurements/1.json
   def show
+    authorize @measurement
   end
 
   # GET /measurements/new
   def new
     @measurement = Measurement.new
+    authorize @measurement
   end
 
   # GET /measurements/1/edit
   def edit
+    authorize @measurement
   end
 
   # POST /measurements or /measurements.json
   def create
-    @measurement = Measurement.new(measurement_params)
+    @measurement = current_user.measurements.build(measurement_params)
+    authorize @measurement
 
     respond_to do |format|
       if @measurement.save
@@ -36,6 +40,8 @@ class MeasurementsController < ApplicationController
 
   # PATCH/PUT /measurements/1 or /measurements/1.json
   def update
+    authorize @measurement
+
     respond_to do |format|
       if @measurement.update(measurement_params)
         format.html { redirect_to @measurement, notice: "Measurement was successfully updated." }
@@ -49,6 +55,7 @@ class MeasurementsController < ApplicationController
 
   # DELETE /measurements/1 or /measurements/1.json
   def destroy
+    authorize @measurement
     @measurement.destroy!
 
     respond_to do |format|
@@ -58,13 +65,14 @@ class MeasurementsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_measurement
-      @measurement = Measurement.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def measurement_params
-      params.require(:measurement).permit(:user_id, :type, :value, :source, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_measurement
+    @measurement = Measurement.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def measurement_params
+    params.require(:measurement).permit(:user_id, :type, :value, :source, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+  end
 end
