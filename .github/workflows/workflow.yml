@@ -1,0 +1,74 @@
+env:
+  RUBY_VERSION: 3.2.1
+  RAILS_ENV: test
+
+  HEALTHKEEPER_TEST_DATABASE_USERNAME: healthkeeper
+  HEALTHKEEPER_TEST_DATABASE_PASSWORD: magic
+  HEALTHKEEPER_TEST_DATABASE: healthkeeper_test
+
+  DATABASE_HOST: localhost
+
+name: Rails tests
+on: [pull_request]
+jobs:
+  rubocop-test:
+    name: Rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Install Rubocop
+        run: gem install rubocop
+      - name: Install Rubocop Performance
+        run: gem install rubocop-performance
+      - name: Install Rubocop Rails
+        run: gem install rubocop-rails
+      - name: Install Rubocop Rspec
+        run: gem install rubocop-rspec
+      - name: Install Rubocop Rspec Rails
+        run: gem install rubocop-rspec_rails
+      - name: Install Rubocop Factory Bot
+        run: gem install rubocop-factory_bot
+      - name: Check code
+        run: rubocop
+  rspec-test:
+    name: RSpec
+    needs: rubocop-test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17.1-alpine
+        env:
+          POSTGRES_USER: ${{ env.HEALTHKEEPER_TEST_DATABASE_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.HEALTHKEEPER_TEST_DATABASE_PASSWORD }}
+          POSTGRES_DB: ${{ env.HEALTHKEEPER_TEST_DATABASE }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Install postgres client
+        run: sudo apt-get install libpq-dev
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundler install
+      - name: Create database
+        env:
+          RAILS_ENV: test
+        run: |
+          bundler exec rails db:create
+          bundler exec rails db:migrate
+      - name: Run tests
+        run: bundler exec rspec
