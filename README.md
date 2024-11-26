@@ -23,7 +23,6 @@ But it does not apply to the states, for example, if you want to add a `p-2` on 
 - In order to install a gem run `make bundle-add gem='gem_name'`, e.g. `make bundle-add gem='gmaps4rails'`.
 - In order to get access to inside the given docker container run `make sh c='container_name'`, e.g. `make sh c='health-keeper-app'`.
 There you can do your stuff the same as within manual set up, e.g. run `rails about`.
-- erge
 
 ## Logs
 Logs can be obtained by:
@@ -31,7 +30,24 @@ Logs can be obtained by:
 - using Docker Desktop: `Containers > Container Name > Logs Tab`.
 
 ## How to run the test suite
+> You should always run your test suite after using the RuboCop autocorrect functionality: `make lint options='-a'` or `make lint options='-x'`. 
 - In order to run all tests run `make test`.
+
+> Rspec tests will be run automatically on GitHub actions on creating a PR.
+
+## How to run linter
+- In order to run linter (RuboCop in our case) and check your code run `make lint`.
+- Alternatively you can pass RuboCop a list of files and directories to check `make lint options='app spec lib/something.rb'`.
+- You can also run RuboCop in an autocorrect mode, where it will try to automatically fix the problems it found in your code `make lint options='-a'`.
+- You can use RuboCop as a formatter with a handy shortcut to run autocorrection only on code layout (a.k.a. formatting) offenses `make lint options='-x'`.
+- Also, you can combine different options, e.g. `make lint options='-x app spec`.
+- For more details check the available command-line options `make lint options='-h'`.
+
+> RuboCop will be run automatically on GitHub actions on creating a PR.
+
+### Use linter inside your IDE/Code editor
+- For JetBrains RubyMine / Intellij IDEA RuboCop support is [available](https://www.jetbrains.com/help/idea/2017.1/rubocop.html) out of the box as of the 2017.1 releases and further. You don't need to add anything.
+- For VSCode you need to install and configure [vscode-rubocop](https://github.com/rubocop/vscode-rubocop) and [ruby-lsp](https://github.com/Shopify/ruby-lsp).
 
 ## Troubleshooting
 

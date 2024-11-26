@@ -48,3 +48,7 @@ logs:
 
 test:
 	docker-compose exec -T health-keeper-app rspec
+
+options ?=
+rubocop:
+	docker-compose exec -T health-keeper-app rubocop $(options)

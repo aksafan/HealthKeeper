@@ -16,6 +16,11 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'ccea06bd53ad2130b3df6807bdbd787b9b9b3d75a02b7402f3acc8ca94a711d6388c7843e7b4197e2df8cc94d6173308fde426e12cec1607fa9590874904885d'
 
+  # Added to fix ActiveSupport::DeprecationException: DEPRECATION WARNING: `Rails.application.secrets` is deprecated in favor of `Rails.application.credentials`
+  # and will be removed in Rails 7.2.
+  # @see https://www.reddit.com/r/rails/comments/17cixft/comment/k99emdx/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+  config.secret_key = Rails.application.secret_key_base
+
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
