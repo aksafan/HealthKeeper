@@ -109,11 +109,12 @@ min_max_map = {
 
 # Create ReferenceRanges
 puts "Creating Reference Ranges..."
-biomarker_records.each do |biomarker|
+biomarker_records.each do |biomarker| # rubocop:disable Metrics/BlockLength
   unit = case biomarker.name
-         when "Glucose", "Cholesterol", "Triglycerides", "LDL Cholesterol", "HDL Cholesterol", "Iron", "Bilirubin", "Albumin", "Magnesium", "Creatinine", "Blood Urea Nitrogen (BUN)"
+         when "Glucose", "Cholesterol", "Triglycerides", "LDL Cholesterol", "HDL Cholesterol", "Iron", "Bilirubin",
+           "Albumin", "Magnesium", "Creatinine", "Blood Urea Nitrogen (BUN)"
            "mg/dL"
-         when "Hemoglobin", "Albumin"
+         when "Hemoglobin"
            "g/dL"
          when "Vitamin D", "Ferritin"
            "ng/mL"
@@ -125,7 +126,7 @@ biomarker_records.each do |biomarker|
            "pg/mL"
          when "C-Reactive Protein"
            "mg/L"
-         when "Calcium", "Potassium", "Sodium", "Magnesium"
+         when "Calcium", "Potassium", "Sodium"
            "mEq/L"
          when "Alkaline Phosphatase", "AST (SGOT)", "ALT (SGPT)"
            "U/L"
@@ -181,11 +182,11 @@ biomarker_records.each do |biomarker|
               [7.0, 56.0]
             when "Bilirubin"
               [0.1, 1.2]
-            when "Albumin"
+            when "Albumin" # rubocop:disable Lint/DuplicateBranch
               [3.5, 5.0]
             when "Magnesium"
               [1.7, 2.2]
-            else
+            else # rubocop:disable Lint/DuplicateBranch
               [0.0, 100.0]
             end
 
@@ -224,7 +225,7 @@ health_records.each do |health_record|
     LabTest.create!(
       user: health_record.user,
       biomarker: biomarker,
-      value: if rand(1).zero?
+      value: if rand(0..1).zero?
                Faker::Number.decimal(l_digits: 2, r_digits: 2)
              else
                Faker::Number.between(
@@ -251,24 +252,17 @@ height_unit = { cm: "cm", ft: "ft" }
 health_records.each do |health_record|
   2.times do
     type, enum_value = measurement_types.to_a.sample
+    source = %w[Manual Imported Device].sample # rubocop:disable Performance/CollectionLiteralInLoop
     Measurement.create!(
       user: health_record.user,
       measurement_type: enum_value,
       unit: case type
             when :height, :chest, :waist, :hips, :wrist then height_unit.to_a.sample[0]
             when :weight then weight_unit.to_a.sample[0]
-            else height_unit.to_a.sample[0]
+            else height_unit.to_a.sample[0] # rubocop:disable Lint/DuplicateBranch
             end,
-      value: case type
-             when :height then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
-             when :weight then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in kg
-             when :chest then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
-             when :waist then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
-             when :hips then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
-             when :wrist then Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
-             else Faker::Number.decimal(l_digits: 2, r_digits: 2) # in cm
-             end,
-      source: %w[Manual Imported Device].sample,
+      value: Faker::Number.decimal(l_digits: 2, r_digits: 2),
+      source: source,
       recordable: health_record,
       notes: Faker::Lorem.sentence
     )

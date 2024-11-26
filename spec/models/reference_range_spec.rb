@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ReferenceRange, type: :model do
-  biomarker = FactoryBot.create(:biomarker)
   subject {
     ReferenceRange.new(
       biomarker: biomarker,
@@ -11,6 +10,8 @@ RSpec.describe ReferenceRange, type: :model do
       source: "DILA"
     )
   }
+  let(:biomarker) { create(:biomarker) }
+
   it "is valid with valid attributes" do
     expect(subject).to be_valid
   end

@@ -14,9 +14,10 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ccea06bd53ad2130b3df6807bdbd787b9b9b3d75a02b7402f3acc8ca94a711d6388c7843e7b4197e2df8cc94d6173308fde426e12cec1607fa9590874904885d'
+  # config.secret_key = 'ccea06bd53ad2130b3df6807bdbd787b9b9b3d75a02b7402f3acc8ca94a711d6388c7843e7b4197e2df8cc94d6173308fde426e12cec1607fa9590874904885d' # rubocop:disable Layout/LineLength
 
-  # Added to fix ActiveSupport::DeprecationException: DEPRECATION WARNING: `Rails.application.secrets` is deprecated in favor of `Rails.application.credentials`
+  # Added to fix ActiveSupport::DeprecationException: DEPRECATION WARNING: `Rails.application.secrets`
+  # is deprecated in favor of `Rails.application.credentials`
   # and will be removed in Rails 7.2.
   # @see https://www.reddit.com/r/rails/comments/17cixft/comment/k99emdx/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
   config.secret_key = Rails.application.secret_key_base
@@ -131,7 +132,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '6db32bfb0c3da533d63b1256da79c0738f168d0b4a7306144af7445c1a6cb5df284afe10e0b9e68a1fcd45e464781aae396e541c89d137c30b5fabf993df312e'
+  # config.pepper = '6db32bfb0c3da533d63b1256da79c0738f168d0b4a7306144af7445c1a6cb5df284afe10e0b9e68a1fcd45e464781aae396e541c89d137c30b5fabf993df312e' # rubocop:disable Layout/LineLength
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false

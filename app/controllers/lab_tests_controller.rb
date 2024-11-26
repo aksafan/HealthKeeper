@@ -87,6 +87,7 @@ class LabTestsController < ApplicationController
   def lab_test_params
     params
       .require(:lab_test)
-      .permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+      .permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes,
+              :created_at, :updated_at)
   end
 end
