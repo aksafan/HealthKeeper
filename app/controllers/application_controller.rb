@@ -26,13 +26,13 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    flash[:alert] = 'You are not authorized to perform this action.'
+    flash[:alert] = t('application.user_not_authorized.failure')
     redirect_back_or_to(root_path)
   end
 
   def record_not_found(error)
-    Rails.logger.debug("Entity #{error.model} with id #{error.id} is not found.")
+    Rails.logger.debug { "Entity #{error.model} with id #{error.id} is not found." }
 
-    render :file => "#{::Rails.root}/public/404.html", :status => 404
+    render :file => "#{::Rails.root}/public/404.html", :status => :not_found
   end
 end

@@ -31,7 +31,7 @@ class BiomarkersController < ApplicationController
 
     respond_to do |format|
       if @biomarker.save
-        format.html { redirect_to @biomarker, notice: "Biomarker was successfully created." }
+        format.html { redirect_to @biomarker, notice: t('.success') }
         format.json { render :show, status: :created, location: @biomarker }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -48,7 +48,7 @@ class BiomarkersController < ApplicationController
     respond_to do |format|
       if @biomarker.update(biomarker_params)
         # if @biomarker.save
-        format.html { redirect_to @biomarker, notice: "Biomarker was successfully updated." }
+        format.html { redirect_to @biomarker, notice: t('.success') }
         format.json { render :show, status: :ok, location: @biomarker }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -63,7 +63,7 @@ class BiomarkersController < ApplicationController
     @biomarker.destroy!
 
     respond_to do |format|
-      format.html { redirect_to biomarkers_path, status: :see_other, notice: "Biomarker was successfully removed." }
+      format.html { redirect_to biomarkers_path, status: :see_other, notice: t('.success') }
       format.json { head :no_content }
     end
   end

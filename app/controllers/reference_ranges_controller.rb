@@ -30,7 +30,7 @@ class ReferenceRangesController < ApplicationController
 
     respond_to do |format|
       if @reference_range.save
-        format.html { redirect_to @biomarker, notice: "Reference range was successfully created." }
+        format.html { redirect_to @biomarker, notice: t('.success') }
         format.json { render :show, status: :created, location: @reference_range }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class ReferenceRangesController < ApplicationController
 
     respond_to do |format|
       if @reference_range.update(reference_range_params)
-        format.html { redirect_to @reference_range, notice: "Reference range was successfully updated." }
+        format.html { redirect_to @reference_range, notice: t('.success') }
         format.json { render :show, status: :ok, location: @reference_range }
       else
         format.html { render :edit, status: :unprocessable_entity }

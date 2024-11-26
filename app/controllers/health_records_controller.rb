@@ -1,5 +1,6 @@
 class HealthRecordsController < ApplicationController
   before_action :set_health_record, only: %i[show edit update destroy]
+  before_action :build_health_record, only: %i[create]
 
   # GET /health_records or /health_records.json
   def index
@@ -24,12 +25,11 @@ class HealthRecordsController < ApplicationController
 
   # POST /health_records or /health_records.json
   def create
-    @health_record = current_user.health_records.build(health_record_params)
     authorize @health_record
 
     respond_to do |format|
       if @health_record.save
-        format.html { redirect_to @health_record, notice: "Health record was successfully created." }
+        format.html { redirect_to @health_record, notice: t('.success') }
         format.json { render :show, status: :created, location: @health_record }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +44,7 @@ class HealthRecordsController < ApplicationController
 
     respond_to do |format|
       if @health_record.update(health_record_params)
-        format.html { redirect_to @health_record, notice: "Health record was successfully updated." }
+        format.html { redirect_to @health_record, notice: t('.success') }
         format.json { render :show, status: :ok, location: @health_record }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,7 +60,7 @@ class HealthRecordsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to health_records_path, status: :see_other, notice: "Health record was successfully removed."
+        redirect_to health_records_path, status: :see_other, notice: t('.success')
       end
       format.json { head :no_content }
     end
@@ -71,6 +71,10 @@ class HealthRecordsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_health_record
     @health_record = HealthRecord.find(params[:id])
+  end
+
+  def build_health_record
+    @health_record = current_user.health_records.build(health_record_params)
   end
 
   # Only allow a list of trusted parameters through.

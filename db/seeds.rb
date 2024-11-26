@@ -9,7 +9,7 @@ LabTest.destroy_all
 Measurement.destroy_all
 
 # Create Users
-puts "Creating Users..."
+Rails.logger.debug "Creating Users..."
 10.times do
   User.create!(
     first_name: Faker::Name.first_name,
@@ -22,7 +22,7 @@ end
 users = User.all
 
 # Assign roles to existing users
-puts "Assign roles to existing users..."
+Rails.logger.debug "Assign roles to existing users..."
 users.each_with_index do |user, i|
   if i == 0
     user.add_role User::Roles::ADMIN
@@ -44,7 +44,7 @@ users.each_with_index do |user, i|
 end
 
 # Create Biomarkers
-puts "Creating Biomarkers..."
+Rails.logger.debug "Creating Biomarkers..."
 biomarkers = [
   "Glucose",
   "Hemoglobin",
@@ -108,7 +108,7 @@ min_max_map = {
 }
 
 # Create ReferenceRanges
-puts "Creating Reference Ranges..."
+Rails.logger.debug "Creating Reference Ranges..."
 biomarker_records.each do |biomarker| # rubocop:disable Metrics/BlockLength
   unit = case biomarker.name
          when "Glucose", "Cholesterol", "Triglycerides", "LDL Cholesterol", "HDL Cholesterol", "Iron", "Bilirubin",
@@ -200,7 +200,7 @@ biomarker_records.each do |biomarker| # rubocop:disable Metrics/BlockLength
 end
 
 # Create HealthRecords
-puts "Creating Health Records..."
+Rails.logger.debug "Creating Health Records..."
 start_day = rand(10).to_i
 users.each do |user|
   i = 0
@@ -217,7 +217,7 @@ end
 health_records = HealthRecord.all
 
 # Create LabTests
-puts "Creating Lab Tests..."
+Rails.logger.debug "Creating Lab Tests..."
 health_records.each do |health_record|
   20.times do
     biomarker = biomarker_records.sample
@@ -244,7 +244,7 @@ health_records.each do |health_record|
 end
 
 # Create Measurements
-puts "Creating Measurements..."
+Rails.logger.debug "Creating Measurements..."
 measurement_types = { height: 0, weight: 1, chest: 2, waist: 3, hips: 4, wrist: 5 }
 weight_unit = { kg: "kg", lb: "lb" }
 height_unit = { cm: "cm", ft: "ft" }
@@ -269,9 +269,9 @@ health_records.each do |health_record|
   end
 end
 
-puts "Seeding completed successfully!"
+Rails.logger.debug "Seeding completed successfully!"
 
-puts "Admin role user credentials: email: \"#{users[0].email}\" and password: \"password\""
-puts "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"password\""
-puts "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"password\""
-puts "User role user credentials: email: \"#{users[3].email}\" and password: \"password\""
+Rails.logger.debug { "Admin role user credentials: email: \"#{users[0].email}\" and password: \"password\"" }
+Rails.logger.debug { "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"password\"" }
+Rails.logger.debug { "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"password\"" }
+Rails.logger.debug { "User role user credentials: email: \"#{users[3].email}\" and password: \"password\"" }

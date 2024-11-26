@@ -1,5 +1,6 @@
 class LabTestsController < ApplicationController
   before_action :set_lab_test, only: %i[show edit update destroy]
+  before_action :build_lab_test, only: %i[create]
 
   # GET /lab_tests or /lab_tests.json
   def index
@@ -30,12 +31,11 @@ class LabTestsController < ApplicationController
 
   # POST /lab_tests or /lab_tests.json
   def create
-    @lab_test = current_user.lab_tests.build(lab_test_params)
     authorize @lab_test
 
     respond_to do |format|
       if @lab_test.save
-        format.html { redirect_to @lab_test, notice: "Lab test was successfully created." }
+        format.html { redirect_to @lab_test, notice: t('.success') }
         format.json { render :show, status: :created, location: @lab_test }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -50,7 +50,7 @@ class LabTestsController < ApplicationController
 
     respond_to do |format|
       if @lab_test.update(lab_test_params)
-        format.html { redirect_to @lab_test, notice: "Lab test was successfully updated." }
+        format.html { redirect_to @lab_test, notice: t('.success') }
         format.json { render :show, status: :ok, location: @lab_test }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,10 +66,10 @@ class LabTestsController < ApplicationController
 
     respond_to do |format|
       if request.referer == lab_test_url
-        format.html { redirect_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
+        format.html { redirect_to lab_tests_path, status: :see_other, notice: t('.success') }
       else
         format.html do
-          redirect_back_or_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed."
+          redirect_back_or_to lab_tests_path, status: :see_other, notice: t('.success')
         end
       end
       format.json { head :no_content }
@@ -81,6 +81,10 @@ class LabTestsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_lab_test
     @lab_test = LabTest.find(params[:id])
+  end
+
+  def build_lab_test
+    @lab_test = current_user.lab_tests.build(lab_test_params)
   end
 
   # Only allow a list of trusted parameters through.

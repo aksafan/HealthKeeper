@@ -32,6 +32,9 @@ generate:
 wait-db:
 	until docker-compose exec -T health-keeper-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1 ; done
 
+migrate-db:
+	docker-compose exec -T health-keeper-app rails db:migrate
+
 setup-db:
 	docker-compose exec -T health-keeper-app rails db:setup
 
