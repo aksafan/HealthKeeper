@@ -1,16 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe Biomarker, type: :model do
-  subject {
-    Biomarker.new(
+RSpec.describe Biomarker do
+  subject(:biomarker) {
+    described_class.new(
       name: "C-Reactive Protein"
     )
   }
+
   it "is valid with valid attributes" do
-    expect(subject).to be_valid
+    expect(biomarker).to be_valid
   end
+
   it "is not valid without a name" do
-    subject.name = nil
-    expect(subject).to_not be_valid
+    biomarker.name = nil
+    expect(biomarker).not_to be_valid
   end
 end
