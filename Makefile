@@ -50,5 +50,5 @@ test:
 	docker-compose exec -T health-keeper-app rspec
 
 options ?=
-lint:
+rubocop:
 	docker-compose exec -T health-keeper-app rubocop $(options)

@@ -1,1 +1,18 @@
 inherit_from: .rubocop_todo.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-factory_bot
+
+AllCops:
+  NewCops: enable
+
+RSpec/FilePath:
+  Enabled: false

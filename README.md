@@ -33,6 +33,8 @@ Logs can be obtained by:
 > You should always run your test suite after using the RuboCop autocorrect functionality: `make lint options='-a'` or `make lint options='-x'`. 
 - In order to run all tests run `make test`.
 
+> Rspec tests will be run automatically on GitHub actions on creating a PR.
+
 ## How to run linter
 - In order to run linter (RuboCop in our case) and check your code run `make lint`.
 - Alternatively you can pass RuboCop a list of files and directories to check `make lint options='app spec lib/something.rb'`.
@@ -40,6 +42,8 @@ Logs can be obtained by:
 - You can use RuboCop as a formatter with a handy shortcut to run autocorrection only on code layout (a.k.a. formatting) offenses `make lint options='-x'`.
 - Also, you can combine different options, e.g. `make lint options='-x app spec`.
 - For more details check the available command-line options `make lint options='-h'`.
+
+> RuboCop will be run automatically on GitHub actions on creating a PR.
 
 ### Use linter inside your IDE/Code editor
 - For JetBrains RubyMine / Intellij IDEA RuboCop support is [available](https://www.jetbrains.com/help/idea/2017.1/rubocop.html) out of the box as of the 2017.1 releases and further. You don't need to add anything.
