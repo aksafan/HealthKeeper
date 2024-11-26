@@ -80,31 +80,31 @@ biomarker_records = Biomarker.all
 
 # min and max values based on the biomarker
 min_max_map = {
-  "Glucose": [70.0, 99.0],
-  "Hemoglobin": [13.5, 17.5],
-  "Cholesterol": [125.0, 200.0],
-  "Triglycerides": [50.0, 150.0],
+  Glucose: [70.0, 99.0],
+  Hemoglobin: [13.5, 17.5],
+  Cholesterol: [125.0, 200.0],
+  Triglycerides: [50.0, 150.0],
   "Vitamin D": [20.0, 50.0],
   "LDL Cholesterol": [0.0, 100.0],
   "HDL Cholesterol": [40.0, 60.0],
-  "Insulin": [2.6, 24.9],
+  Insulin: [2.6, 24.9],
   "C-Reactive Protein": [0.0, 3.0],
-  "Calcium": [8.5, 10.5],
-  "Potassium": [3.5, 5.0],
-  "Sodium": [135.0, 145.0],
-  "Iron": [60.0, 170.0],
-  "Ferritin": [12.0, 300.0],
+  Calcium: [8.5, 10.5],
+  Potassium: [3.5, 5.0],
+  Sodium: [135.0, 145.0],
+  Iron: [60.0, 170.0],
+  Ferritin: [12.0, 300.0],
   "Thyroid Stimulating Hormone (TSH)": [0.4, 4.0],
   "Free T4": [0.8, 1.8],
   "Free T3": [2.3, 4.2],
-  "Creatinine": [0.6, 1.2],
+  Creatinine: [0.6, 1.2],
   "Blood Urea Nitrogen (BUN)": [7.0, 20.0],
   "Alkaline Phosphatase": [44.0, 147.0],
   "AST (SGOT)": [10.0, 40.0],
   "ALT (SGPT)": [7.0, 56.0],
-  "Bilirubin": [0.1, 1.2],
-  "Albumin": [3.5, 5.0],
-  "Magnesium": [1.7, 2.2]
+  Bilirubin: [0.1, 1.2],
+  Albumin: [3.5, 5.0],
+  Magnesium: [1.7, 2.2]
 }
 
 # Create ReferenceRanges
@@ -277,7 +277,7 @@ end
 
 puts "Seeding completed successfully!"
 
-puts "Admin role user credentials: email: \"#{users[0].email}\" and password: \"#{'password'}\""
-puts "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"#{'password'}\""
-puts "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"#{'password'}\""
-puts "User role user credentials: email: \"#{users[3].email}\" and password: \"#{'password'}\""
+puts "Admin role user credentials: email: \"#{users[0].email}\" and password: \"password\""
+puts "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"password\""
+puts "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"password\""
+puts "User role user credentials: email: \"#{users[3].email}\" and password: \"password\""
