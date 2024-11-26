@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_action :set_measurement, only: %i[ show edit update destroy ]
+  before_action :set_measurement, only: %i[show edit update destroy]
 
   # GET /measurements or /measurements.json
   def index

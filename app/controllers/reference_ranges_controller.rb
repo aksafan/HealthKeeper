@@ -1,5 +1,5 @@
 class ReferenceRangesController < ApplicationController
-  before_action :set_reference_range, only: %i[ show edit update destroy ]
+  before_action :set_reference_range, only: %i[show edit update destroy]
   before_action :set_biomarker, only: %i[new create]
 
   # GET /reference_ranges or /reference_ranges.json

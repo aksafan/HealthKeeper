@@ -1,5 +1,5 @@
 class BiomarkersController < ApplicationController
-  before_action :set_biomarker, only: %i[ show edit update destroy ]
+  before_action :set_biomarker, only: %i[show edit update destroy]
 
   # GET /biomarkers or /biomarkers.json
   def index
@@ -47,7 +47,7 @@ class BiomarkersController < ApplicationController
 
     respond_to do |format|
       if @biomarker.update(biomarker_params)
-      # if @biomarker.save
+        # if @biomarker.save
         format.html { redirect_to @biomarker, notice: "Biomarker was successfully updated." }
         format.json { render :show, status: :ok, location: @biomarker }
       else

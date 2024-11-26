@@ -1,5 +1,5 @@
 class LabTestsController < ApplicationController
-  before_action :set_lab_test, only: %i[ show edit update destroy ]
+  before_action :set_lab_test, only: %i[show edit update destroy]
 
   # GET /lab_tests or /lab_tests.json
   def index

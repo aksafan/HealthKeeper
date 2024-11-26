@@ -1,5 +1,5 @@
 class HealthRecordsController < ApplicationController
-  before_action :set_health_record, only: %i[ show edit update destroy ]
+  before_action :set_health_record, only: %i[show edit update destroy]
 
   # GET /health_records or /health_records.json
   def index
