@@ -1,0 +1,24 @@
+services:
+  health-keeper-app:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - health-keeper-postgres
+    volumes:
+      - ./:/app
+    tty: true
+
+  health-keeper-postgres:
+    image: postgres:17.1-alpine
+    volumes:
+      - health-keeper-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${HEALTHKEEPER_DEVELOPMENT_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${HEALTHKEEPER_DEVELOPMENT_DATABASE_PASSWORD}
+      POSTGRES_DB: ${HEALTHKEEPER_DEVELOPMENT_DATABASE}
+    ports:
+      - "5432:5432"
+
+volumes:
+  health-keeper-postgres:

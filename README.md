@@ -2,24 +2,11 @@
 
 ## Installation
 
-1. Install Ruby `3.2.1`.
-2. Create `.env` file in root folder of the project.
-2. Install [PostgreSQL](https://www.postgresql.org/download/) `>=14.13`.
-3. Add corresponded env vars to `.env` file with DB credentials. E.g.:
-```
-HEALTHKEEPER_DEVELOPMENT_DATABASE = "healthkeeper_development"
-HEALTHKEEPER_DEVELOPMENT_DATABASE_USERNAME = "healthkeeper"
-HEALTHKEEPER_DEVELOPMENT_DATABASE_PASSWORD = "magic"
+### Most recent way with Docker
+The most efficient way to set up dev env is to utilize [docker and docker compose](docs/DockerInstallation.md).
 
-HEALTHKEEPER_TEST_DATABASE = "healthkeeper_test"
-HEALTHKEEPER_TEST_DATABASE_USERNAME = "healthkeeper"
-HEALTHKEEPER_TEST_DATABASE_PASSWORD = "magic"
-```
-4. Run `./bin/bundle install`
-5. Run `rails db:setup`.
-6. In order to recreate DB run `rails db:reset`.
-7. In order to (re)populate DB with a testing data run `rails db:seed`.
-8. To run Rails server use `./bin/dev` instead of `rails s`/`rails server` (see [next chapter](#bootstrap-and-tailwindCSS) if curious why).
+### Legacy approach with manual installation
+Also, there is an old less efficient way to set up everything by [manually installing all dependencies](docs/ManualInstallation.md).
 
 ### Bootstrap and TailwindCSS
 As we have both Bootstrap and TailwindCSS installed inside the project we need to split them somehow.
@@ -27,11 +14,48 @@ As we have both Bootstrap and TailwindCSS installed inside the project we need t
 If you want to add a `p-1` class then it should be `tw-p-1` now.
 But it does not apply to the states, for example, if you want to add a `p-2` on hover, then your class should be `hover:tw-p-2`.
 
-> Also, in order to support hot reload of TailwindCSS class changes, you need to run Rails server with `./bin/dev` instead of `rails s`/`rails server`.
+## Useful commands
+- In order to recreate DB run `make reset-db`. 
+- In order to (re)populate DB with a testing data run `make seed-db`.
+- In order to get a list of routes run `make routes`. 
+- In order to use generator run `make generate options='generate options'`, e.g. `make generate options='resource student name:string school:belongs_to'`. 
+- In order to install all gems from `Gemfile.lock` run `make bundle-install`.
+- In order to install a gem run `make bundle-add gem='gem_name'`, e.g. `make bundle-add gem='gmaps4rails'`.
+- In order to get access to inside the given docker container run `make sh c='container_name'`, e.g. `make sh c='health-keeper-app'`.
+There you can do your stuff the same as within manual set up, e.g. run `rails about`.
+
+## Logs
+Logs can be obtained by:
+- running `make logs`;
+- using Docker Desktop: `Containers > Container Name > Logs Tab`.
 
 ## How to run the test suite
+> You should always run your test suite after using the RuboCop autocorrect functionality: `make lint options='-a'` or `make lint options='-x'`. 
+- In order to run all tests run `make test`.
 
-TODO
+> Rspec tests will be run automatically on GitHub actions on creating a PR.
+
+## How to run linter
+- In order to run linter (RuboCop in our case) and check your code run `make lint`.
+- Alternatively you can pass RuboCop a list of files and directories to check `make lint options='app spec lib/something.rb'`.
+- You can also run RuboCop in an autocorrect mode, where it will try to automatically fix the problems it found in your code `make lint options='-a'`.
+- You can use RuboCop as a formatter with a handy shortcut to run autocorrection only on code layout (a.k.a. formatting) offenses `make lint options='-x'`.
+- Also, you can combine different options, e.g. `make lint options='-x app spec`.
+- For more details check the available command-line options `make lint options='-h'`.
+
+> RuboCop will be run automatically on GitHub actions on creating a PR.
+
+### Use linter inside your IDE/Code editor
+- For JetBrains RubyMine / Intellij IDEA RuboCop support is [available](https://www.jetbrains.com/help/idea/2017.1/rubocop.html) out of the box as of the 2017.1 releases and further. You don't need to add anything.
+- For VSCode you need to install and configure [vscode-rubocop](https://github.com/rubocop/vscode-rubocop) and [ruby-lsp](https://github.com/Shopify/ruby-lsp).
+
+## Troubleshooting
+
+- If you have an error
+```
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+```
+while running `make` command - you [need to install](https://apple.stackexchange.com/questions/254380/why-am-i-getting-an-invalid-active-developer-path-when-attempting-to-use-git-a) the `Xcode Command Line Tools` (run `xcode-select --install`) or reset it if has been already done (run `xcode-select --reset`).
 
 ## App scope to be done
 
@@ -50,4 +74,4 @@ TODO
    - [x] Authorization.
    - [x] Role management.
       - [x] Tune role policies.
-5. [ ] Wrap an app in Docker.
+5. [x] Wrap an app in Docker.
