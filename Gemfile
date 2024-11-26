@@ -63,9 +63,9 @@ gem 'dotenv-rails'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
-  gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -74,12 +74,12 @@ group :development do
 
   # Linters
   gem 'rubocop', require: false
+  gem 'rubocop-factory_bot', require: false
   # Performance optimization analysis.
   gem 'rubocop-performance', '~> 1.12.0', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
-  gem 'rubocop-factory_bot', require: false
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

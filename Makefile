@@ -2,7 +2,8 @@ build: docker-build
 up: docker-up
 down: docker-down
 restart: docker-down docker-up
-init: docker-down-all docker-build docker-up bundle-install wait-db setup-db
+init: docker-build docker-up bundle-install wait-db setup-db
+reinit: docker-down-all docker-build docker-up bundle-install wait-db setup-db
 
 docker-build:
 	docker compose build --no-cache

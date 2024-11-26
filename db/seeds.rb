@@ -224,7 +224,14 @@ health_records.each do |health_record|
     LabTest.create!(
       user: health_record.user,
       biomarker: biomarker,
-      value: rand(1).zero? ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : Faker::Number.between(from: min_max_map[biomarker.name][0], to: min_max_map[biomarker.name][1]),
+      value: if rand(1).zero?
+               Faker::Number.decimal(l_digits: 2, r_digits: 2)
+             else
+               Faker::Number.between(
+                 from: min_max_map[biomarker.name][0],
+                 to: min_max_map[biomarker.name][1]
+               )
+             end,
       unit: reference_range.unit,
       reference_range: reference_range,
       recordable: health_record,

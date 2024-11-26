@@ -59,7 +59,9 @@ class HealthRecordsController < ApplicationController
     @health_record.destroy!
 
     respond_to do |format|
-      format.html { redirect_to health_records_path, status: :see_other, notice: "Health record was successfully removed." }
+      format.html do
+        redirect_to health_records_path, status: :see_other, notice: "Health record was successfully removed."
+      end
       format.json { head :no_content }
     end
   end

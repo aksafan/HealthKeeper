@@ -3,8 +3,13 @@ class LabTestsController < ApplicationController
 
   # GET /lab_tests or /lab_tests.json
   def index
-    @recordables = policy_scope(LabTest).select(:recordable_id, :created_at).order(:created_at).group(:recordable_id, :created_at)
-    @biomarkers = policy_scope(Biomarker).includes(:reference_ranges, :lab_tests).where(lab_tests: { user_id: current_user.id })
+    @recordables = policy_scope(LabTest)
+                   .select(:recordable_id, :created_at)
+                   .order(:created_at)
+                   .group(:recordable_id, :created_at)
+    @biomarkers = policy_scope(Biomarker)
+                  .includes(:reference_ranges, :lab_tests)
+                  .where(lab_tests: { user_id: current_user.id })
   end
 
   # GET /lab_tests/1 or /lab_tests/1.json
@@ -63,7 +68,9 @@ class LabTestsController < ApplicationController
       if request.referer == lab_test_url
         format.html { redirect_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
       else
-        format.html { redirect_back_or_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
+        format.html do
+          redirect_back_or_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed."
+        end
       end
       format.json { head :no_content }
     end
@@ -78,6 +85,8 @@ class LabTestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def lab_test_params
-    params.require(:lab_test).permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+    params
+      .require(:lab_test)
+      .permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
   end
 end

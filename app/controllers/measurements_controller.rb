@@ -60,9 +60,13 @@ class MeasurementsController < ApplicationController
 
     respond_to do |format|
       if request.referer == measurement_url
-        format.html { redirect_to measurements_path, status: :see_other, notice: "Measurement was successfully removed." }
+        format.html do
+          redirect_to measurements_path, status: :see_other, notice: "Measurement was successfully removed."
+        end
       else
-        format.html { redirect_back_or_to measurement_path, status: :see_other, notice: "Measurement was successfully removed." }
+        format.html do
+          redirect_back_or_to measurement_path, status: :see_other, notice: "Measurement was successfully removed."
+        end
       end
       format.json { head :no_content }
     end
@@ -77,6 +81,8 @@ class MeasurementsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def measurement_params
-    params.require(:measurement).permit(:user_id, :type, :value, :source, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+    params
+      .require(:measurement)
+      .permit(:user_id, :type, :value, :source, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
   end
 end

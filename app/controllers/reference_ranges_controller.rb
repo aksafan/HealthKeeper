@@ -60,7 +60,10 @@ class ReferenceRangesController < ApplicationController
     @reference_range.destroy!
 
     respond_to do |format|
-      format.html { redirect_back_or_to reference_range_path, status: :see_other, notice: "Reference range was successfully removed." }
+      format.html do
+        redirect_back_or_to reference_range_path,
+                            status: :see_other, notice: "Reference range was successfully removed."
+      end
       format.json { head :no_content }
     end
   end
@@ -78,6 +81,8 @@ class ReferenceRangesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reference_range_params
-    params.require(:reference_range).permit(:biomarker_id, :min_value, :max_value, :unit, :source, :created_at, :updated_at)
+    params
+      .require(:reference_range)
+      .permit(:biomarker_id, :min_value, :max_value, :unit, :source, :created_at, :updated_at)
   end
 end
