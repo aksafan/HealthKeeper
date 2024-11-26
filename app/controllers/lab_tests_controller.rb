@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LabTestsController < ApplicationController
   before_action :set_lab_test, only: %i[show edit update destroy]
   before_action :build_lab_test, only: %i[create]

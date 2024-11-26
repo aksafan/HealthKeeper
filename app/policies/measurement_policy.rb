@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MeasurementPolicy < ApplicationPolicy
   def index?
     user.all_roles_can?

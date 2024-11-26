@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HealthRecordsController < ApplicationController
   before_action :set_health_record, only: %i[show edit update destroy]
   before_action :build_health_record, only: %i[create]

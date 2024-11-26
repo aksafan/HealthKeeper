@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BiomarkersController < ApplicationController
   before_action :set_biomarker, only: %i[show edit update destroy]
 
@@ -79,7 +81,7 @@ class BiomarkersController < ApplicationController
   def biomarker_params
     params.require(:biomarker).permit(
       :name,
-      reference_ranges_attributes: [:id, :min_value, :max_value, :unit, :source],
+      reference_ranges_attributes: %i[id min_value max_value unit source]
     )
   end
 end

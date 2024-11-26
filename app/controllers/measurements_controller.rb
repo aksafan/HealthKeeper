@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MeasurementsController < ApplicationController
   before_action :set_measurement, only: %i[show edit update destroy]
   before_action :build_measurement, only: %i[create]

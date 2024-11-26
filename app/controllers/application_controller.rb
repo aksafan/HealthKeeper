@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
@@ -11,8 +13,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :email])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :email])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name email])
   end
 
   def after_sign_in_path_for(_resource)
@@ -33,6 +35,6 @@ class ApplicationController < ActionController::Base
   def record_not_found(error)
     Rails.logger.debug { "Entity #{error.model} with id #{error.id} is not found." }
 
-    render :file => "#{::Rails.root}/public/404.html", :status => :not_found
+    render file: "#{::Rails.root}/public/404.html", status: :not_found
   end
 end

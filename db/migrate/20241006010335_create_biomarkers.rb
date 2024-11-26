@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBiomarkers < ActiveRecord::Migration[7.1]
   def change
     create_table :biomarkers do |t|

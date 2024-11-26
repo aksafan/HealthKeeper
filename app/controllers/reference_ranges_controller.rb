@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReferenceRangesController < ApplicationController
   before_action :set_reference_range, only: %i[show edit update destroy]
   before_action :set_biomarker, only: %i[new create]
@@ -62,7 +64,7 @@ class ReferenceRangesController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_back_or_to reference_range_path,
-                            status: :see_other, notice: "Reference range was successfully removed."
+                            status: :see_other, notice: 'Reference range was successfully removed.'
       end
       format.json { head :no_content }
     end
