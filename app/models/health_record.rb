@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HealthRecord < ApplicationRecord
   belongs_to :user
   has_many :lab_tests, as: :recordable, dependent: :destroy

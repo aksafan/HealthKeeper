@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 inherit_mode:
   merge:
     - Exclude
@@ -15,4 +13,12 @@ AllCops:
   NewCops: enable
 
 RSpec/FilePath:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+Metrics/MethodLength:
+  Max: 20
+
+Style/Documentation:
   Enabled: false

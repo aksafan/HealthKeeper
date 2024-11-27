@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ReferenceRangesController < ApplicationController
-  before_action :set_reference_range, only: %i[ show edit update destroy ]
+  before_action :set_reference_range, only: %i[show edit update destroy]
   before_action :set_biomarker, only: %i[new create]
 
   # GET /reference_ranges or /reference_ranges.json
@@ -30,7 +32,7 @@ class ReferenceRangesController < ApplicationController
 
     respond_to do |format|
       if @reference_range.save
-        format.html { redirect_to @biomarker, notice: "Reference range was successfully created." }
+        format.html { redirect_to @biomarker, notice: t('.success') }
         format.json { render :show, status: :created, location: @reference_range }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +47,7 @@ class ReferenceRangesController < ApplicationController
 
     respond_to do |format|
       if @reference_range.update(reference_range_params)
-        format.html { redirect_to @reference_range, notice: "Reference range was successfully updated." }
+        format.html { redirect_to @reference_range, notice: t('.success') }
         format.json { render :show, status: :ok, location: @reference_range }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,7 +62,10 @@ class ReferenceRangesController < ApplicationController
     @reference_range.destroy!
 
     respond_to do |format|
-      format.html { redirect_back_or_to reference_range_path, status: :see_other, notice: "Reference range was successfully removed." }
+      format.html do
+        redirect_back_or_to reference_range_path,
+                            status: :see_other, notice: 'Reference range was successfully removed.'
+      end
       format.json { head :no_content }
     end
   end
@@ -78,6 +83,8 @@ class ReferenceRangesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reference_range_params
-    params.require(:reference_range).permit(:biomarker_id, :min_value, :max_value, :unit, :source, :created_at, :updated_at)
+    params
+      .require(:reference_range)
+      .permit(:biomarker_id, :min_value, :max_value, :unit, :source, :created_at, :updated_at)
   end
 end

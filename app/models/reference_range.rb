@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReferenceRange < ApplicationRecord
   belongs_to :biomarker, touch: true
   has_many :lab_tests, dependent: :nullify

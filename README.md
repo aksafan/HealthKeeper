@@ -15,6 +15,7 @@ If you want to add a `p-1` class then it should be `tw-p-1` now.
 But it does not apply to the states, for example, if you want to add a `p-2` on hover, then your class should be `hover:tw-p-2`.
 
 ## Useful commands
+- In order to reinit everything run `make reinit`. It will drop all containers and recreate everything from the scratch. 
 - In order to recreate DB run `make reset-db`. 
 - In order to (re)populate DB with a testing data run `make seed-db`.
 - In order to get a list of routes run `make routes`. 
@@ -36,12 +37,12 @@ Logs can be obtained by:
 > Rspec tests will be run automatically on GitHub actions on creating a PR.
 
 ## How to run linter
-- In order to run linter (RuboCop in our case) and check your code run `make lint`.
-- Alternatively you can pass RuboCop a list of files and directories to check `make lint options='app spec lib/something.rb'`.
-- You can also run RuboCop in an autocorrect mode, where it will try to automatically fix the problems it found in your code `make lint options='-a'`.
-- You can use RuboCop as a formatter with a handy shortcut to run autocorrection only on code layout (a.k.a. formatting) offenses `make lint options='-x'`.
-- Also, you can combine different options, e.g. `make lint options='-x app spec`.
-- For more details check the available command-line options `make lint options='-h'`.
+- In order to run linter (RuboCop in our case) and check your code run `make rubocop`.
+- Alternatively you can pass RuboCop a list of files and directories to check `make rubocop options='app spec lib/something.rb'`.
+- You can also run RuboCop in an autocorrect mode, where it will try to automatically fix the problems it found in your code `make rubocop options='-a'`.
+- You can use RuboCop as a formatter with a handy shortcut to run autocorrection only on code layout (a.k.a. formatting) offenses `make rubocop options='-x'`.
+- Also, you can combine different options, e.g. `make rubocop options='-x app spec`.
+- For more details check the available command-line options `make rubocop options='-h'`.
 
 > RuboCop will be run automatically on GitHub actions on creating a PR.
 

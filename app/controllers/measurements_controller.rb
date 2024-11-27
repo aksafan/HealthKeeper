@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class MeasurementsController < ApplicationController
-  before_action :set_measurement, only: %i[ show edit update destroy ]
+  before_action :set_measurement, only: %i[show edit update destroy]
+  before_action :build_measurement, only: %i[create]
 
   # GET /measurements or /measurements.json
   def index
@@ -24,12 +27,11 @@ class MeasurementsController < ApplicationController
 
   # POST /measurements or /measurements.json
   def create
-    @measurement = current_user.measurements.build(measurement_params)
     authorize @measurement
 
     respond_to do |format|
       if @measurement.save
-        format.html { redirect_to @measurement, notice: "Measurement was successfully created." }
+        format.html { redirect_to @measurement, notice: t('.success') }
         format.json { render :show, status: :created, location: @measurement }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +46,7 @@ class MeasurementsController < ApplicationController
 
     respond_to do |format|
       if @measurement.update(measurement_params)
-        format.html { redirect_to @measurement, notice: "Measurement was successfully updated." }
+        format.html { redirect_to @measurement, notice: t('.success') }
         format.json { render :show, status: :ok, location: @measurement }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,9 +62,13 @@ class MeasurementsController < ApplicationController
 
     respond_to do |format|
       if request.referer == measurement_url
-        format.html { redirect_to measurements_path, status: :see_other, notice: "Measurement was successfully removed." }
+        format.html do
+          redirect_to measurements_path, status: :see_other, notice: t('.success')
+        end
       else
-        format.html { redirect_back_or_to measurement_path, status: :see_other, notice: "Measurement was successfully removed." }
+        format.html do
+          redirect_back_or_to measurement_path, status: :see_other, notice: t('.success')
+        end
       end
       format.json { head :no_content }
     end
@@ -75,8 +81,14 @@ class MeasurementsController < ApplicationController
     @measurement = Measurement.find(params[:id])
   end
 
+  def build_measurement
+    @measurement = current_user.measurements.build(measurement_params)
+  end
+
   # Only allow a list of trusted parameters through.
   def measurement_params
-    params.require(:measurement).permit(:user_id, :type, :value, :source, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+    params
+      .require(:measurement)
+      .permit(:user_id, :type, :value, :source, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
   end
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BiomarkersController < ApplicationController
-  before_action :set_biomarker, only: %i[ show edit update destroy ]
+  before_action :set_biomarker, only: %i[show edit update destroy]
 
   # GET /biomarkers or /biomarkers.json
   def index
@@ -31,7 +33,7 @@ class BiomarkersController < ApplicationController
 
     respond_to do |format|
       if @biomarker.save
-        format.html { redirect_to @biomarker, notice: "Biomarker was successfully created." }
+        format.html { redirect_to @biomarker, notice: t('.success') }
         format.json { render :show, status: :created, location: @biomarker }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,8 +49,8 @@ class BiomarkersController < ApplicationController
 
     respond_to do |format|
       if @biomarker.update(biomarker_params)
-      # if @biomarker.save
-        format.html { redirect_to @biomarker, notice: "Biomarker was successfully updated." }
+        # if @biomarker.save
+        format.html { redirect_to @biomarker, notice: t('.success') }
         format.json { render :show, status: :ok, location: @biomarker }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -63,7 +65,7 @@ class BiomarkersController < ApplicationController
     @biomarker.destroy!
 
     respond_to do |format|
-      format.html { redirect_to biomarkers_path, status: :see_other, notice: "Biomarker was successfully removed." }
+      format.html { redirect_to biomarkers_path, status: :see_other, notice: t('.success') }
       format.json { head :no_content }
     end
   end
@@ -79,7 +81,7 @@ class BiomarkersController < ApplicationController
   def biomarker_params
     params.require(:biomarker).permit(
       :name,
-      reference_ranges_attributes: [:id, :min_value, :max_value, :unit, :source],
+      reference_ranges_attributes: %i[id min_value max_value unit source]
     )
   end
 end

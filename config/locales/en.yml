@@ -29,3 +29,40 @@
 
 en:
   hello: "Hello world"
+  reference_ranges:
+    create:
+      success: "Reference range was successfully created."
+    update:
+      success: "Reference range was successfully updated."
+  measurements:
+    create:
+      success: "Measurement was successfully created."
+    update:
+      success: "Measurement was successfully updated."
+    destroy:
+      success: "Measurement was successfully removed."
+  biomarkers:
+    create:
+      success: "Biomarker was successfully created."
+    update:
+      success: "Biomarker was successfully updated."
+    destroy:
+      success: "Biomarker was successfully removed."
+  health_records:
+    create:
+      success: "Health record was successfully created."
+    update:
+      success: "Health record was successfully updated."
+    destroy:
+      success: "Health record was successfully removed."
+  lab_tests:
+    create:
+      success: "Lab test was successfully created."
+    update:
+      success: "Lab test was successfully updated."
+    destroy:
+      success: "Lab test was successfully removed."
+
+  application:
+    user_not_authorized:
+      failure: 'You are not authorized to perform this action.'

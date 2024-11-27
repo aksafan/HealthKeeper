@@ -2,7 +2,8 @@ build: docker-build
 up: docker-up
 down: docker-down
 restart: docker-down docker-up
-init: docker-down-all docker-build docker-up bundle-install wait-db setup-db
+init: docker-build docker-up bundle-install wait-db setup-db
+reinit: docker-down-all docker-build docker-up bundle-install wait-db setup-db
 
 docker-build:
 	docker compose build --no-cache
@@ -30,6 +31,9 @@ generate:
 
 wait-db:
 	until docker-compose exec -T health-keeper-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1 ; done
+
+migrate-db:
+	docker-compose exec -T health-keeper-app rails db:migrate
 
 setup-db:
 	docker-compose exec -T health-keeper-app rails db:setup
