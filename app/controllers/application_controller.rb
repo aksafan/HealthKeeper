@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
@@ -11,28 +13,28 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :email])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :email])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name email])
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     health_records_path
   end
 
-  def after_sign_out_path_for(resource_or_scope)
+  def after_sign_out_path_for(_resource_or_scope)
     root_path
   end
 
   private
 
   def user_not_authorized
-    flash[:alert] = 'You are not authorized to perform this action.'
+    flash[:alert] = t('application.user_not_authorized.failure')
     redirect_back_or_to(root_path)
   end
 
-  def record_not_found(e)
-    Rails.logger.debug("Entity #{e.model} with id #{e.id} is not found.")
+  def record_not_found(error)
+    Rails.logger.debug { "Entity #{error.model} with id #{error.id} is not found." }
 
-    render :file => "#{::Rails.root}/public/404.html",  :status => 404
+    render file: "#{::Rails.root}/public/404.html", status: :not_found
   end
 end

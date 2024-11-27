@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-  rolify :role_join_table_name => 'users_roles'
+  rolify role_join_table_name: 'users_roles'
   resourcify
   after_commit :assign_default_role, on: :create
 
@@ -45,7 +47,7 @@ class User < ApplicationRecord
   private
 
   def assign_default_role
-    self.add_role(User::Roles::USER) if self.roles.blank?
+    add_role(User::Roles::USER) if roles.blank?
   end
 
   class Roles < User
@@ -54,7 +56,7 @@ class User < ApplicationRecord
     HEALTH_COACH = :health_coach
     USER = :user
 
-    ROLES = [ADMIN, DOCTOR, HEALTH_COACH, USER]
-    FULL_ACCESS_ROLES = [ADMIN, DOCTOR, HEALTH_COACH]
+    ROLES = [ADMIN, DOCTOR, HEALTH_COACH, USER].freeze
+    FULL_ACCESS_ROLES = [ADMIN, DOCTOR, HEALTH_COACH].freeze
   end
 end

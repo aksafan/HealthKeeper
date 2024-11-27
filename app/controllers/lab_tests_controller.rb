@@ -1,10 +1,18 @@
+# frozen_string_literal: true
+
 class LabTestsController < ApplicationController
-  before_action :set_lab_test, only: %i[ show edit update destroy ]
+  before_action :set_lab_test, only: %i[show edit update destroy]
+  before_action :build_lab_test, only: %i[create]
 
   # GET /lab_tests or /lab_tests.json
   def index
-    @recordables = policy_scope(LabTest).select(:recordable_id, :created_at).order(:created_at).group(:recordable_id, :created_at)
-    @biomarkers = policy_scope(Biomarker).includes(:reference_ranges, :lab_tests).where(lab_tests: { user_id: current_user.id })
+    @recordables = policy_scope(LabTest)
+                   .select(:recordable_id, :created_at)
+                   .order(:created_at)
+                   .group(:recordable_id, :created_at)
+    @biomarkers = policy_scope(Biomarker)
+                  .includes(:reference_ranges, :lab_tests)
+                  .where(lab_tests: { user_id: current_user.id })
   end
 
   # GET /lab_tests/1 or /lab_tests/1.json
@@ -25,12 +33,11 @@ class LabTestsController < ApplicationController
 
   # POST /lab_tests or /lab_tests.json
   def create
-    @lab_test = current_user.lab_tests.build(lab_test_params)
     authorize @lab_test
 
     respond_to do |format|
       if @lab_test.save
-        format.html { redirect_to @lab_test, notice: "Lab test was successfully created." }
+        format.html { redirect_to @lab_test, notice: t('.success') }
         format.json { render :show, status: :created, location: @lab_test }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +52,7 @@ class LabTestsController < ApplicationController
 
     respond_to do |format|
       if @lab_test.update(lab_test_params)
-        format.html { redirect_to @lab_test, notice: "Lab test was successfully updated." }
+        format.html { redirect_to @lab_test, notice: t('.success') }
         format.json { render :show, status: :ok, location: @lab_test }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,9 +68,11 @@ class LabTestsController < ApplicationController
 
     respond_to do |format|
       if request.referer == lab_test_url
-        format.html { redirect_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
+        format.html { redirect_to lab_tests_path, status: :see_other, notice: t('.success') }
       else
-        format.html { redirect_back_or_to lab_tests_path, status: :see_other, notice: "Lab test was successfully removed." }
+        format.html do
+          redirect_back_or_to lab_tests_path, status: :see_other, notice: t('.success')
+        end
       end
       format.json { head :no_content }
     end
@@ -76,8 +85,15 @@ class LabTestsController < ApplicationController
     @lab_test = LabTest.find(params[:id])
   end
 
+  def build_lab_test
+    @lab_test = current_user.lab_tests.build(lab_test_params)
+  end
+
   # Only allow a list of trusted parameters through.
   def lab_test_params
-    params.require(:lab_test).permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes, :created_at, :updated_at)
+    params
+      .require(:lab_test)
+      .permit(:user_id, :biomarker_id, :value, :unit, :reference_range_id, :recordable_type, :recordable_id, :notes,
+              :created_at, :updated_at)
   end
 end
