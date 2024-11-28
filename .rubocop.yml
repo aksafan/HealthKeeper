@@ -12,10 +12,10 @@ require:
 AllCops:
   NewCops: enable
 
-RSpec/FilePath:
+Rails/FilePath:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 Metrics/MethodLength:
   Max: 20

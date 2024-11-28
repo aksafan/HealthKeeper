@@ -231,8 +231,8 @@ health_records.each do |health_record|
                Faker::Number.decimal(l_digits: 2, r_digits: 2)
              else
                Faker::Number.between(
-                 from: min_max_map[biomarker.name][0],
-                 to: min_max_map[biomarker.name][1]
+                 from: min_max_map[biomarker.name.to_sym][0],
+                 to: min_max_map[biomarker.name.to_sym][1]
                )
              end,
       unit: reference_range.unit,
@@ -271,9 +271,9 @@ health_records.each do |health_record|
   end
 end
 
-Rails.logger.debug 'Seeding completed successfully!'
+puts 'Seeding completed successfully!'
 
-Rails.logger.debug { "Admin role user credentials: email: \"#{users[0].email}\" and password: \"password\"" }
-Rails.logger.debug { "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"password\"" }
-Rails.logger.debug { "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"password\"" }
-Rails.logger.debug { "User role user credentials: email: \"#{users[3].email}\" and password: \"password\"" }
+puts "Admin role user credentials: email: \"#{users[0].email}\" and password: \"password\""
+puts "Doctor role user credentials: email: \"#{users[1].email}\" and password: \"password\""
+puts "HealthCoach role user credentials: email: \"#{users[2].email}\" and password: \"password\""
+puts "User role user credentials: email: \"#{users[3].email}\" and password: \"password\""

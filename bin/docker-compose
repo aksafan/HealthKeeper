@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+COMMAND="${1}"
+
+CONTAINER_ID="$(docker-compose ps -q health-keeper-app)"
+
+if [ -z "$CONTAINER_ID" ] || [ -z "$(docker ps -q --no-trunc | grep $$CONTAINER_ID)" ]; then
+  echo "No, it's not running."
+  COMMAND_TO_EXECUTE="docker-compose run --rm health-keeper-app $COMMAND"
+  echo "$COMMAND_TO_EXECUTE"
+  cd "$SCRIPT_DIR" && exec "$COMMAND_TO_EXECUTE"
+else
+  echo "Yes, it's running."
+  echo "Command to execute: docker-compose exec -T health-keeper-app $COMMAND"
+fi
