@@ -16,8 +16,9 @@ But it does not apply to the states, for example, if you want to add a `p-2` on 
 
 ## Useful commands
 - In order to reinit everything run `make reinit`. It will drop all containers and recreate everything from the scratch. 
-- In order to recreate DB run `make reset-db`. 
-- In order to (re)populate DB with a testing data run `make seed-db`.
+- In order to set up DB run `make db:setup`. 
+- In order to recreate DB run `make db:reset`. 
+- In order to (re)populate DB with a testing data run `make db:seed`.
 - In order to get a list of routes run `make routes`. 
 - In order to use generator run `make generate options='generate options'`, e.g. `make generate options='resource student name:string school:belongs_to'`. 
 - In order to install all gems from `Gemfile.lock` run `make bundle-install`.
@@ -32,7 +33,7 @@ Logs can be obtained by:
 
 ## How to run the test suite
 > You should always run your test suite after using the RuboCop autocorrect functionality: `make lint options='-a'` or `make lint options='-x'`. 
-- In order to run all tests run `make test`.
+- In order to run all tests run `make rspec`.
 
 > Rspec tests will be run automatically on GitHub actions on creating a PR.
 
