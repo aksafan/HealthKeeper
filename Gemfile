@@ -9,7 +9,7 @@ gem 'actionmailer', '>= 7.1.4.1'
 gem 'actionpack', '>= 7.1.5.1'
 gem 'actiontext', '>= 7.1.4.1'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
-gem "rails-html-sanitizer", ">= 1.6.1"
+gem 'rails-html-sanitizer', '>= 1.6.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
