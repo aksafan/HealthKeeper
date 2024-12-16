@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  rolify role_join_table_name: 'users_roles'
+  rolify
   resourcify
   after_commit :assign_default_role, on: :create
 
@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :health_records, dependent: :destroy
   has_many :lab_tests, dependent: :destroy
   has_many :measurements, dependent: :destroy
+  has_and_belongs_to_many :roles, join_table: :users_roles # rubocop:disable Rails/HasAndBelongsToMany
 
   validates :email, presence: true, uniqueness: true, email: true
 
