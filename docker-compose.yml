@@ -7,6 +7,7 @@ services:
       - health-keeper-postgres
     volumes:
       - ./:/app
+      - gem_cache:/usr/local/bundle/gems
     tty: true
 
   health-keeper-postgres:
@@ -22,3 +23,4 @@ services:
 
 volumes:
   health-keeper-postgres:
+  gem_cache:

@@ -4,6 +4,7 @@ require 'faker'
 
 # Clear existing data to avoid duplication
 User.destroy_all
+Role.destroy_all
 Biomarker.destroy_all
 ReferenceRange.destroy_all
 HealthRecord.destroy_all
