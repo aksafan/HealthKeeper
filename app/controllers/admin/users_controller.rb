@@ -52,7 +52,7 @@ module Admin
       authorize @user
     end
 
-    # PATCH/PUT /admin/users/1/update_roles or /admin/users/1/update_roles.json
+    # POST /admin/users/1/update_roles or /admin/users/1/update_roles.json
     def update_roles
       authorize @user
 
@@ -75,7 +75,7 @@ module Admin
     end
 
     def set_roles_list
-      @roles = Role.all.map { |role| [role.name.capitalize, role.name] }
+      @roles = Role.distinct.pluck(:name).map { |role| [role.capitalize, role] }
     end
 
     def set_user_params_roles

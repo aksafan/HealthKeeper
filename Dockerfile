@@ -29,6 +29,9 @@ RUN gem install bundler && bundle install --jobs 4 --retry 3
 # Copy the application code
 COPY . /app
 
+# Precompile assets (optional, if using Rails with assets)
+RUN bundle exec rake assets:precompile
+
 # Expose the port the app runs on
 EXPOSE 3000
 
