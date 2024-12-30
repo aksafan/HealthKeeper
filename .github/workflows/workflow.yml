@@ -70,5 +70,7 @@ jobs:
         run: |
           bundler exec rails db:create
           bundler exec rails db:migrate
+      - name: Enhance prepare commands with tailwindcss:build
+        run: bundle exec rake spec:prepare
       - name: Run tests
         run: bundler exec rspec

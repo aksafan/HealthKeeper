@@ -60,7 +60,7 @@ gem 'email_validator'
 gem 'bootstrap'
 gem 'sassc', '~> 2.4'
 gem 'sassc-rails', '~> 2.1.2'
-gem 'tailwindcss-rails', '~> 2.7'
+gem 'tailwindcss-rails', '~> 3.1'
 
 gem 'dotenv-rails'
 
