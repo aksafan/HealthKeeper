@@ -132,6 +132,8 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
+    i18n-debug (1.2.0)
+      i18n (< 2)
     importmap-rails (2.0.2)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -361,6 +363,7 @@ DEPENDENCIES
   email_validator
   factory_bot_rails
   faker
+  i18n-debug
   importmap-rails
   jbuilder
   pg (~> 1.1)

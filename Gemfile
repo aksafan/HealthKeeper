@@ -87,6 +87,9 @@ group :development do
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
 
+  # To see in what paths rails are looking for translations
+  gem 'i18n-debug'
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
