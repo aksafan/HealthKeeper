@@ -46,6 +46,26 @@ users.each_with_index do |user, i|
   next
 end
 
+# Assign users to doctors and health coaches
+Rails.logger.debug 'Creating Assignments...'
+doctors = users.select { |u| u.doctor? }
+health_coaches = users.select { |u| u.health_coach? }
+clients = users.select { |u| u.user? }
+
+doctors.each do |doctor|
+  assigned_clients = clients.sample(3)
+  assigned_clients.each do |client|
+    Assignment.create!(assignee: doctor, assigned: client)
+  end
+end
+
+health_coaches.each do |health_coach|
+  assigned_clients = clients.sample(3)
+  assigned_clients.each do |client|
+    Assignment.create!(assignee: health_coach, assigned: client)
+  end
+end
+
 # Create Biomarkers
 Rails.logger.debug 'Creating Biomarkers...'
 biomarkers = [
