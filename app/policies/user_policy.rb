@@ -29,6 +29,14 @@ class UserPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def edit_assigned_users?
+    user.admin?
+  end
+
+  def update_assigned_users?
+    user.admin?
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       if user.admin?

@@ -17,6 +17,11 @@
     </p>
 
     <p class="tw-pt-2 tw-pr-6">
+      <strong>Assigned users:</strong>
+      <%= get_assigned_user_list_as_string user %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
       <strong>Created at:</strong>
       <%= format_date_with_time user.created_at %>
     </p>

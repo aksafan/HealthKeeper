@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       member do
         get :edit_roles
         post :update_roles
+        get :edit_assigned_users
+        post :update_assigned_users
       end
     end
   end
