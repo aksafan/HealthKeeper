@@ -1,19 +1,35 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  def get_user_roles_list_as_string(user)
+  def user_roles_list_as_string(user)
     user.user_roles_names.map { User::Roles::ROLES_MAP[_1.to_sym] }.join(', ')
   end
 
-  def get_assigned_user_list_as_string(user)
+  def assigned_user_list_as_string(user)
     user.assigned_users.map(&:full_name).join(', ')
   end
 
-  def get_user_role_ids_list(user)
+  def assigned?(user)
+    !user.assigned_users.empty?
+  end
+
+  def assignees?(user)
+    !user.assignees.empty?
+  end
+
+  def assignees_list_as_string(user)
+    user.assignees.map(&:full_name).join(', ')
+  end
+
+  def user_role_ids_list(user)
     user.user_roles_names
   end
 
-  def get_assigned_user_ids_list(user)
+  def assigned_user_ids_list(user)
     user.assigned_users_ids
+  end
+
+  def users_list_for_select(user)
+    user.users_list.map { [_1.full_name, _1.id] }
   end
 end

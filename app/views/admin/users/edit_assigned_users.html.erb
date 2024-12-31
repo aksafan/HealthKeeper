@@ -16,7 +16,7 @@
   <div>
     <%= form.label :users, style: "display: block" %>
     <%= form.select :users,
-                    options_for_select(@users_list, get_assigned_user_ids_list(@user)),
+                    options_for_select(users_list_for_select(@user), assigned_user_ids_list(@user)),
                     {},
                     multiple: true %>
   </div>

@@ -56,6 +56,10 @@ class User < ApplicationRecord
     assigned_users.pluck(:id)
   end
 
+  def users_list
+    User.all
+  end
+
   def full_access_roles_can?
     has_any_role?(*Roles::FULL_ACCESS_ROLES)
   end

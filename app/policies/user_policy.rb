@@ -30,11 +30,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit_assigned_users?
-    user.admin?
+    user.admin? && record.full_access_roles_can?
   end
 
   def update_assigned_users?
-    user.admin?
+    user.admin? && record.full_access_roles_can?
   end
 
   class Scope < ApplicationPolicy::Scope

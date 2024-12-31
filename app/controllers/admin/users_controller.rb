@@ -7,7 +7,6 @@ module Admin
                            update_assigned_users]
     before_action :set_roles_list, only: %i[edit_roles update_roles]
     before_action :set_user_params_roles, only: %i[update_roles]
-    before_action :set_users_list, only: %i[edit_assigned_users update_assigned_users]
     before_action :set_user_params_user_ids, only: %i[update_assigned_users]
 
     # GET /admin/users or /admin/users.json
@@ -100,10 +99,6 @@ module Admin
 
     def set_roles_list
       @roles = Role.distinct.pluck(:name).map { [_1.capitalize, _1] }
-    end
-
-    def set_users_list
-      @users_list = User.select(:id, :first_name, :last_name).map { [_1.full_name, _1.id] }
     end
 
     def set_user_params_roles
