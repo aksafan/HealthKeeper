@@ -1,0 +1,24 @@
+<tbody>
+    <% @users.each do |user| %>
+      <tr id="<%= dom_id user %>" class="tw-bg-white tw-border-b tw-bg-white tw-border-gray-300 tw-hover:bg-gray-700 tw-text-center">
+        <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:tw-text-white">
+          <%= user.full_name %>
+        </th>
+        <td class="tw-px-2 tw-py-2">
+          <%= user.email %>
+        </td>
+        <td class="tw-px-2 tw-py-2">
+          <%= get_user_roles_list_as_string user %>
+        </td>
+        <td class="tw-px-6 tw-py-4">
+          <%= format_date_with_time user.created_at %>
+        </td>
+        <td class="tw-px-6 tw-py-4">
+          <%= format_date_with_time user.updated_at %>
+        </td>
+        <td class="tw-px-6 tw-py-4 tw-text-center">
+          <%= link_to "Show details", admin_user_url(user), class: "tw-font-medium tw-text-blue-600 tw-dark:tw-text-blue-500 tw-hover:tw-underline" %>
+        </td>
+      </tr>
+    <% end %>
+</tbody>

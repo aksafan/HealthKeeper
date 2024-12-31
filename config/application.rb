@@ -40,5 +40,9 @@ module Healthkeeper
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Fixes broken tailwind.css build for CI
+    # @see https://github.com/rails/tailwindcss-rails/issues/153#issuecomment-1225895063
+    config.assets.css_compressor = nil
   end
 end

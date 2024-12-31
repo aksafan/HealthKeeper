@@ -5,9 +5,6 @@ services:
       - '3000:3000'
     depends_on:
       - health-keeper-postgres
-    volumes:
-      - ./:/app
-      - gem_cache:/usr/local/bundle/gems
     tty: true
 
   health-keeper-postgres:
@@ -23,4 +20,3 @@ services:
 
 volumes:
   health-keeper-postgres:
-  gem_cache:

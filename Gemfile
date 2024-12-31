@@ -58,13 +58,18 @@ gem 'email_validator'
 
 # Styling
 gem 'bootstrap'
-gem 'sassc-rails'
-gem 'tailwindcss-rails', '~> 2.7'
+gem 'sassc', '~> 2.4'
+gem 'sassc-rails', '~> 2.1.2'
+gem 'tailwindcss-rails', '~> 3.1'
 
 gem 'dotenv-rails'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+
+group :test do
+  gem 'rails-controller-testing'
+end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -86,6 +91,9 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
+
+  # To see in what paths rails are looking for translations
+  gem 'i18n-debug'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

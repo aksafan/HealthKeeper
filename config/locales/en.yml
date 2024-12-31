@@ -62,7 +62,22 @@ en:
       success: "Lab test was successfully updated."
     destroy:
       success: "Lab test was successfully removed."
+  admin:
+    users:
+      update:
+        success: "User was successfully updated."
+      destroy:
+        success: "User was successfully removed."
+      update_roles:
+        success: "User roles were successfully updated."
 
   application:
     user_not_authorized:
       failure: 'You are not authorized to perform this action.'
+
+  errors:
+    messages:
+      invalid_roles_detected: "Invalid roles detected: %{invalid_roles}"
+      remove_role_failure: "Failed to remove role: %{role}"
+      add_role_failure: "Failed to add role: %{role}"
+      unexpected_error: "Unexpected error while synchronizing roles"

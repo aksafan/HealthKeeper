@@ -1,0 +1,13 @@
+<section>
+  <header class="tw-my-2 tw-flex tw-flex-center tw-justify-between tw-items-center">
+    <h1 class="tw-text-lg">Users</h1>
+  </header>
+
+  <div id="users" class="tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:tw-rounded-lg">
+    <table class="tw-w-full tw-text-sm tw-text-left tw-text-right tw-rounded-md">
+      <%= render "index_table_head" %>
+      <%= render "index_table_body", users: @users %>
+    </table>
+  </div>
+
+</section>
