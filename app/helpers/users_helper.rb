@@ -29,6 +29,10 @@ module UsersHelper
     user.assigned_users_ids
   end
 
+  def assigned_users_list_for_select(user)
+    user.assigned_users.map { [_1.full_name, _1.id] }
+  end
+
   def users_list_for_select(user)
     user.users_list.map { [_1.full_name, _1.id] }
   end
