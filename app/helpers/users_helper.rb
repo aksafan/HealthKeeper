@@ -2,7 +2,7 @@
 
 module UsersHelper
   def user_roles_list_as_string(user)
-    user.user_roles_names.map { User::Roles::ROLES_MAP[_1.to_sym] }.join(', ')
+    user.user_roles_names.map { Role::ROLES_MAP[_1.to_sym] }.join(', ')
   end
 
   def assigned_user_list_as_string(user)
@@ -21,7 +21,7 @@ module UsersHelper
     user.assignees.map(&:full_name).join(', ')
   end
 
-  def user_role_ids_list(user)
+  def user_role_names_list(user)
     user.user_roles_names
   end
 

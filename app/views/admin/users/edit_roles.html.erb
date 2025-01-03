@@ -16,7 +16,7 @@
   <div>
     <%= form.label :roles, style: "display: block" %>
     <%= form.select :roles,
-                    options_for_select(users_list_for_select(@user), user_role_ids_list(@user)),
+                    options_for_select(users_list_for_select(@user), user_role_names_list(@user)),
                     {},
                     multiple: true %>
   </div>
