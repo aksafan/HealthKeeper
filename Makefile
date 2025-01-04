@@ -48,9 +48,9 @@ wait-db:
 migrate-db:
 	docker-compose exec -T health-keeper-app rails db:migrate
 
-options ?= 1
+STEP ?= 1
 rollback-db:
-	docker-compose exec -T health-keeper-app rails db:rollback STEP=$(options)
+	docker-compose exec -T health-keeper-app rails db:rollback STEP=$(STEP)
 
 setup-db:
 	docker-compose exec -T health-keeper-app rails db:setup

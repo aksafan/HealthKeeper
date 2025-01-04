@@ -21,7 +21,7 @@ But it does not apply to the states, for example, if you want to add a `p-2` on 
 - In order to recreate DB run `make db:reset`. 
 - In order to (re)populate DB with a testing data run `make db:seed`.
 - In order to apply migrations run `make db:migrate`.
-- In order to rollback migrations run `make db:rollback`. It rollbacks 1 migration by default. If you need more, just add an option for that: `make db:rollback options=2`
+- In order to rollback migrations run `make db:rollback`. It rollbacks 1 migration by default. If you need more, just add a `STEP` option for that: `make db:rollback STEP=2`
 ### Gem management:
 - In order to install all gems from `Gemfile.lock` run `make bundle-install`.
 - In order to install a gem run `make bundle-add gem='gem_name'`, e.g. `make bundle-add gem='gmaps4rails'`.
