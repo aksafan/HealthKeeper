@@ -11,6 +11,7 @@ bundle-add: up bin-bundle-install
 routes: up rails-routes
 generate: up rails-generate
 db\:migrate: up migrate-db
+db\:rollback: up rollback-db
 db\:setup: up setup-db
 db\:reset: up reset-db
 db\:seed: up seed-db
@@ -46,6 +47,10 @@ wait-db:
 
 migrate-db:
 	docker-compose exec -T health-keeper-app rails db:migrate
+
+STEP ?= 1
+rollback-db:
+	docker-compose exec -T health-keeper-app rails db:rollback STEP=$(STEP)
 
 setup-db:
 	docker-compose exec -T health-keeper-app rails db:setup

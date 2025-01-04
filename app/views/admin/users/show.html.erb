@@ -1,0 +1,18 @@
+<%= render "user", user: @user %>
+
+<div>
+  <%= link_to "Edit this user", edit_admin_user_path(@user) %> |
+  <%= link_to "Change this user roles", edit_roles_admin_user_path(@user) %> |
+  <% if @user.full_access_roles_can? %>
+    <%= link_to "Update assigned users", edit_assigned_users_admin_user_path(@user) %> |
+  <% end %>
+  <%= link_to "Back to users", admin_users_path %>
+
+  <%= button_to(
+        "Remove this user",
+        edit_admin_user_path(@user),
+        method: :delete,
+        data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+        class: "tw-mt-6 tw-mr-6 tw-mb-6 tw-bg-red-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded"
+      ) %>
+</div>

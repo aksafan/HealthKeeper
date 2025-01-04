@@ -1,0 +1,45 @@
+<div id="<%= dom_id user %>" class="tw-border-double tw-shadow-lg tw-ring-4 tw-rounded-lg">
+  <div class="tw-m-8 tw-py-4">
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>User Name:</strong>
+      <%= user.full_name %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Email:</strong>
+      <%= user.email %>
+    </p>
+    
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Role:</strong>
+      <%= user_roles_list_as_string(user) %>
+    </p>
+
+    <% if current_user.full_access_roles_can? && assigned?(user) %>
+      <p class="tw-pt-2 tw-pr-6">
+        <strong>Assigned users:</strong>
+        <%= assigned_user_list_as_string user %>
+      </p>
+    <% end %>
+
+    <% if assignees? user %>
+      <p class="tw-pt-2 tw-pr-6">
+        <strong>Expert you are assigned to:</strong>
+        <%= assignees_list_as_string(user) %>
+      </p>
+    <% end %>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Created at:</strong>
+      <%= format_date_with_time user.created_at %>
+    </p>
+
+    <p class="tw-pt-2 tw-pr-6">
+      <strong>Updated at:</strong>
+      <%= format_date_with_time user.updated_at %>
+    </p>
+
+  </div>
+
+</div>

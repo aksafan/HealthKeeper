@@ -1,0 +1,33 @@
+<h1>Editing user roles</h1>
+
+<%= form_with model: @user, url: update_roles_admin_user_path(@user), method: :post do |form| %>
+  <% if @user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :roles, style: "display: block" %>
+    <%= form.select :roles,
+                    options_for_select(@roles, user_role_names_list(@user)),
+                    {},
+                    multiple: true %>
+  </div>
+
+  <div>
+    <%= form.submit class: "tw-my-4 tw-bg-blue-500  tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+  </div>
+<% end %>
+
+<div>
+  <%= link_to "Show this user", admin_user_url(@user) %> |
+  <%= link_to "Back to users", admin_users_path %>
+</div>
+

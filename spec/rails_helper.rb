@@ -8,6 +8,7 @@ require_relative '../config/environment'
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'devise'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -64,4 +65,14 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Ensure roles exist before any tests run
+  config.before(:suite) do
+    Role.find_or_create_by!(name: 'user')
+    Role.find_or_create_by!(name: 'doctor')
+    Role.find_or_create_by!(name: 'admin')
+  end
+
+  # Include Devise test helpers for request specs
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end

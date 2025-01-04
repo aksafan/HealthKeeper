@@ -12,4 +12,19 @@ class Role < ApplicationRecord
             allow_nil: true
 
   scopify
+
+  ADMIN = :admin
+  DOCTOR = :doctor
+  HEALTH_COACH = :health_coach
+  USER = :user
+
+  ROLES = [ADMIN, DOCTOR, HEALTH_COACH, USER].freeze
+  FULL_ACCESS_ROLES = [ADMIN, DOCTOR, HEALTH_COACH].freeze
+
+  ROLES_MAP = {
+    ADMIN => 'Admin',
+    DOCTOR => 'Doctor',
+    HEALTH_COACH => 'Health coach',
+    USER => 'User'
+  }.freeze
 end

@@ -1,0 +1,8 @@
+services:
+  health-keeper-app:
+    volumes:
+      - ./:/app
+      - bundle_cache:/usr/local/bundle
+
+volumes:
+  bundle_cache:
