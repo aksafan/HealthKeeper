@@ -108,6 +108,20 @@ RSpec.describe 'Admin::UsersController' do
         expect(assigns(:user).errors[:base]).to include('Invalid roles detected: invalid_role')
       end
     end
+
+    context 'with empty roles' do
+      let(:empty_roles) { [] }
+
+      it 'returns an unprocessable entity status' do
+        post update_roles_admin_user_path(user), params: { user: { roles: empty_roles } }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'assigns errors' do
+        post update_roles_admin_user_path(user), params: { user: { roles: empty_roles } }
+        expect(assigns(:user).errors[:base]).to include('You can not leave user without any role')
+      end
+    end
   end
 
   describe 'GET /edit_assigned_users' do

@@ -79,6 +79,12 @@ module RoleManagement
   end
 
   def validate_roles(new_roles)
+    if new_roles.empty?
+      errors.add(:base, t('errors.messages.empty_roles_detected'))
+
+      return false
+    end
+
     valid_roles = Role.pluck(:name)
     invalid_roles = new_roles - valid_roles
     unless invalid_roles.empty?

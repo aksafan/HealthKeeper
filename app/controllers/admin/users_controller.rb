@@ -84,7 +84,7 @@ module Admin
           format.html { redirect_to admin_user_url(@user), notice: t('.success') }
           format.json { render :show, status: :ok, location: @user }
         else
-          format.html { render :edit_roles, status: :unprocessable_entity }
+          format.html { render :edit_assigned_users, status: :unprocessable_entity }
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       end

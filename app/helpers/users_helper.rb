@@ -29,7 +29,28 @@ module UsersHelper
     user.assigned_users_ids
   end
 
+  # @return [[string, int]] Pairs of user full name and id ready to use in select field
+  # Adds current user pair if it was not selected
+  # Or empty array if there are no assigned users
+  def assigned_users_list_for_select(user, current_user)
+    return [] if user.assigned_users.empty?
+
+    current_user_included = false
+    assigned_users = user.assigned_users.map do |assigned_user|
+      current_user_included = true if assigned_user.id == current_user.id
+      [assigned_user.full_name, assigned_user.id]
+    end
+
+    assigned_users << [current_user.full_name, current_user.id] unless current_user_included
+
+    assigned_users
+  end
+
   def users_list_for_select(user)
     user.users_list.map { [_1.full_name, _1.id] }
+  end
+
+  def assigned_users?
+    current_user.full_access_roles_can? && !current_user.assigned_users.empty?
   end
 end

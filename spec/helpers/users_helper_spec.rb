@@ -111,4 +111,50 @@ RSpec.describe UsersHelper do
       end
     end
   end
+
+  describe '#assigned_users_list_for_select' do
+    let(:current_user) { instance_double(User, full_name: 'Current User', id: 999) }
+    let(:user_with_assigned_users) do
+      instance_double(
+        User,
+        assigned_users: [
+          instance_double(User, full_name: 'Alice Johnson', id: 101),
+          instance_double(User, full_name: 'Bob Smith', id: 102)
+        ]
+      )
+    end
+    let(:user_with_assigned_users_and_current) do
+      instance_double(
+        User,
+        assigned_users: [
+          instance_double(User, full_name: 'Alice Johnson', id: 101),
+          instance_double(User, full_name: 'Bob Smith', id: 102),
+          instance_double(User, full_name: 'Current User', id: 999)
+        ]
+      )
+    end
+
+    context 'when the user has assigned users and no current' do
+      it 'returns a list of arrays with user names and IDs for select' do
+        result = helper.assigned_users_list_for_select(user_with_assigned_users, current_user)
+        expect(result).to eq([['Alice Johnson', 101], ['Bob Smith', 102], ['Current User', 999]])
+      end
+    end
+
+    context 'when the user has assigned users with current' do
+      it 'returns a list of arrays with user names and IDs for select' do
+        result = helper.assigned_users_list_for_select(user_with_assigned_users_and_current, current_user)
+        expect(result).to eq([['Alice Johnson', 101], ['Bob Smith', 102], ['Current User', 999]])
+      end
+    end
+
+    context 'when the user has no assigned users' do
+      let(:user_with_no_assigned_users) { instance_double(User, assigned_users: []) }
+
+      it 'returns an empty array' do
+        result = helper.assigned_users_list_for_select(user_with_no_assigned_users, current_user)
+        expect(result).to eq([])
+      end
+    end
+  end
 end

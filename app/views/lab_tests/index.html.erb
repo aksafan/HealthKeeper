@@ -1,14 +1,32 @@
 <section>
-  <header class="tw-my-2 tw-flex tw-flex-center tw-justify-between tw-items-center">
-    <h1 class="tw-text-lg">Lab Tests</h1>
-    <%= link_to "New lab test", new_lab_test_path, class: "btn btn-primary" %>
-  </header>
+  <%= turbo_frame_tag "lab_tests", class: "shadow overflow-hidden rounded border-b border-gray-200" do %>
 
-  <div id="lab_tests" class="tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:tw-rounded-lg">
-    <table class="tw-w-full tw-text-sm tw-text-left tw-text-right tw-rounded-md">
-      <%= render "index_table_head", recordables: @recordables %>
-      <%= render "index_table_body", recordables: @recordables, biomarkers: @biomarkers %>
-    </table>
-  </div>
+    <header class="tw-my-2 tw-flex tw-flex-center tw-justify-between tw-items-center">
+      <h1 class="tw-text-lg">Lab Tests</h1>
+
+      <% if assigned_users? %>
+        <div class="flex justify-end mb-1">
+          <%= form_with url: lab_tests_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "lab_tests" } do |form| %>
+            <%= form.select :user_id,
+                            options_for_select(
+                              assigned_users_list_for_select(current_user, current_user),
+                              @chosen_user_id
+                            ),
+                            { include_blank: false },
+                            class: "border-blue-500 rounded",
+                            data: {
+                              action: "change->search-form#search"
+                            }
+            %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= link_to "New lab test", new_lab_test_path, class: "btn btn-primary" %>
+    </header>
+
+    <%= render "index_table", recordables: @recordables, biomarkers: @biomarkers %>
+
+  <% end %>
 
 </section>
