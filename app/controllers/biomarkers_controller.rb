@@ -5,6 +5,7 @@ class BiomarkersController < ApplicationController
 
   # GET /biomarkers or /biomarkers.json
   def index
+    authorize Biomarker
     @biomarkers = policy_scope(Biomarker.all)
   end
 

@@ -7,6 +7,7 @@ class LabTestsController < ApplicationController
 
   # GET /lab_tests or /lab_tests.json
   def index
+    authorize LabTest
     @recordables = policy_scope(LabTest)
                    .select(:recordable_id, :created_at)
                    .where(user_id: @chosen_user_id)
