@@ -6,6 +6,7 @@ class MeasurementsController < ApplicationController
 
   # GET /measurements or /measurements.json
   def index
+    authorize Measurement
     @measurements = policy_scope(Measurement.all)
   end
 

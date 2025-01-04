@@ -3,6 +3,9 @@
 <div>
   <%= link_to "Edit this user", edit_admin_user_path(@user) %> |
   <%= link_to "Change this user roles", edit_roles_admin_user_path(@user) %> |
+  <% if @user.full_access_roles_can? %>
+    <%= link_to "Update assigned users", edit_assigned_users_admin_user_path(@user) %> |
+  <% end %>
   <%= link_to "Back to users", admin_users_path %>
 
   <%= button_to(

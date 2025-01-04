@@ -15,14 +15,19 @@ If you want to add a `p-1` class then it should be `tw-p-1` now.
 But it does not apply to the states, for example, if you want to add a `p-2` on hover, then your class should be `hover:tw-p-2`.
 
 ## Useful commands
-- In order to reinit everything run `make reinit`. It will drop all containers and recreate everything from the scratch. 
+- In order to reinit everything run `make reinit`. It will drop all containers and recreate everything from the scratch.
+### DB management:
 - In order to set up DB run `make db:setup`. 
 - In order to recreate DB run `make db:reset`. 
 - In order to (re)populate DB with a testing data run `make db:seed`.
-- In order to get a list of routes run `make routes`. 
-- In order to use generator run `make generate options='generate options'`, e.g. `make generate options='resource student name:string school:belongs_to'`. 
+- In order to apply migrations run `make db:migrate`.
+- In order to rollback migrations run `make db:rollback`. It rollbacks 1 migration by default. If you need more, just add a `STEP` option for that: `make db:rollback STEP=2`
+### Gem management:
 - In order to install all gems from `Gemfile.lock` run `make bundle-install`.
 - In order to install a gem run `make bundle-add gem='gem_name'`, e.g. `make bundle-add gem='gmaps4rails'`.
+### Others:
+- In order to get a list of routes run `make routes`. 
+- In order to use generator run `make generate options='generate options'`, e.g. `make generate options='resource student name:string school:belongs_to'`.
 - In order to get access to inside the given docker container run `make sh c='container_name'`, e.g. `make sh c='health-keeper-app'`.
 There you can do your stuff the same as within manual set up, e.g. run `rails about`.
 

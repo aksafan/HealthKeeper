@@ -6,6 +6,7 @@ class HealthRecordsController < ApplicationController
 
   # GET /health_records or /health_records.json
   def index
+    authorize HealthRecord
     @health_records = policy_scope(HealthRecord.all)
   end
 

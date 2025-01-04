@@ -70,6 +70,8 @@ en:
         success: "User was successfully removed."
       update_roles:
         success: "User roles were successfully updated."
+      update_assigned_users:
+        success: "Users were successfully assigned."
 
   application:
     user_not_authorized:
@@ -78,6 +80,9 @@ en:
   errors:
     messages:
       invalid_roles_detected: "Invalid roles detected: %{invalid_roles}"
+      empty_roles_detected: "You can not leave user without any role"
       remove_role_failure: "Failed to remove role: %{role}"
       add_role_failure: "Failed to add role: %{role}"
-      unexpected_error: "Unexpected error while synchronizing roles"
+      unexpected_error: "Unexpected error while updating user"
+      remove_user_assignment_failure: "Failed to unseat user with ID: %{id}"
+      add_user_assignment_failure: "Failed to assign user with ID: %{role}"

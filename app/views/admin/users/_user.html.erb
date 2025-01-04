@@ -13,8 +13,22 @@
     
     <p class="tw-pt-2 tw-pr-6">
       <strong>Role:</strong>
-      <%= get_user_roles_list_as_string user %>
+      <%= user_roles_list_as_string(user) %>
     </p>
+
+    <% if current_user.full_access_roles_can? && assigned?(user) %>
+      <p class="tw-pt-2 tw-pr-6">
+        <strong>Assigned users:</strong>
+        <%= assigned_user_list_as_string user %>
+      </p>
+    <% end %>
+
+    <% if assignees? user %>
+      <p class="tw-pt-2 tw-pr-6">
+        <strong>Expert you are assigned to:</strong>
+        <%= assignees_list_as_string(user) %>
+      </p>
+    <% end %>
 
     <p class="tw-pt-2 tw-pr-6">
       <strong>Created at:</strong>

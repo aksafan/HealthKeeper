@@ -2,9 +2,12 @@
 
 module Admin
   class UsersController < ApplicationController
-    before_action :set_user, only: %i[show edit update destroy update edit_roles update_roles]
+    before_action :set_user,
+                  only: %i[show edit update destroy update edit_roles update_roles edit_assigned_users
+                           update_assigned_users]
     before_action :set_roles_list, only: %i[edit_roles update_roles]
     before_action :set_user_params_roles, only: %i[update_roles]
+    before_action :set_user_params_user_ids, only: %i[update_assigned_users]
 
     # GET /admin/users or /admin/users.json
     def index
@@ -67,6 +70,26 @@ module Admin
       end
     end
 
+    # GET /admin/users/1/edit_assigned_users or /admin/users/1/edit_assigned_users.json
+    def edit_assigned_users
+      authorize @user
+    end
+
+    # POST /admin/users/1/update_assigned_users or /admin/users/1/update_assigned_users.json
+    def update_assigned_users
+      authorize @user
+
+      respond_to do |format|
+        if @user.assign_users?(@user_params_user_ids)
+          format.html { redirect_to admin_user_url(@user), notice: t('.success') }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit_assigned_users, status: :unprocessable_entity }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
     private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -75,16 +98,20 @@ module Admin
     end
 
     def set_roles_list
-      @roles = Role.distinct.pluck(:name).map { |role| [role.capitalize, role] }
+      @roles = Role.distinct.pluck(:name).map { [_1.capitalize, _1] }
     end
 
     def set_user_params_roles
       @user_params_roles = user_params[:roles].compact_blank
     end
 
+    def set_user_params_user_ids
+      @user_params_user_ids = user_params[:users].compact_blank
+    end
+
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, roles: [])
+      params.require(:user).permit(:first_name, :last_name, :email, roles: [], users: [])
     end
   end
 end

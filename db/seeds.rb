@@ -28,22 +28,42 @@ users = User.all
 Rails.logger.debug 'Assign roles to existing users...'
 users.each_with_index do |user, i|
   if i.zero?
-    user.add_role User::Roles::ADMIN
+    user.add_role Role::ADMIN
 
     next
   end
 
   if i == 1
-    user.add_role User::Roles::DOCTOR
+    user.add_role Role::DOCTOR
 
     next
   end
 
   next unless i == 2
 
-  user.add_role User::Roles::HEALTH_COACH
+  user.add_role Role::HEALTH_COACH
 
   next
+end
+
+# Assign users to doctors and health coaches
+Rails.logger.debug 'Creating Assignments...'
+doctors = users.select(&:doctor?)
+health_coaches = users.select(&:health_coach?)
+clients = users.select(&:user?)
+
+doctors.each do |doctor|
+  assigned_clients = clients.sample(3)
+  assigned_clients.each do |client|
+    Assignment.create!(assignee: doctor, assigned: client)
+  end
+end
+
+health_coaches.each do |health_coach|
+  assigned_clients = clients.sample(3)
+  assigned_clients.each do |client|
+    Assignment.create!(assignee: health_coach, assigned: client)
+  end
 end
 
 # Create Biomarkers

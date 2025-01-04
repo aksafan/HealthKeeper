@@ -65,8 +65,14 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-end
 
-RSpec.configure do |config|
+  # Ensure roles exist before any tests run
+  config.before(:suite) do
+    Role.find_or_create_by!(name: 'user')
+    Role.find_or_create_by!(name: 'doctor')
+    Role.find_or_create_by!(name: 'admin')
+  end
+
+  # Include Devise test helpers for request specs
   config.include Devise::Test::IntegrationHelpers, type: :request
 end

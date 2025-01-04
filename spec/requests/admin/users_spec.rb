@@ -3,15 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::UsersController' do
-  let(:admin) { create(:user, :admin) }
-  let(:user) { create(:user) }
-  let(:valid_attributes) { { first_name: 'John', last_name: 'Doe', email: 'john.doe@example.com' } }
-  let(:invalid_attributes) { { email: '' } }
   let(:roles) { %w[admin doctor user] }
+  let(:user) { create(:user, :user_role) }
+  let(:doctor) { create(:user, :doctor_role) }
 
-  before do
-    sign_in admin
-  end
+  before { sign_in create(:user, :admin_role) }
 
   describe 'GET /index' do
     it 'renders a successful response' do
@@ -20,10 +16,9 @@ RSpec.describe 'Admin::UsersController' do
     end
 
     it 'authorizes and displays all users' do
-      users_amount = 3
-      create_list(:user, users_amount)
+      create_list(:user, 3)
       get admin_users_path
-      expect(assigns(:users).count).to eq(users_amount + 1) # Include the admin user
+      expect(assigns(:users).count).to eq(4) # 3 created + 1 admin
     end
   end
 
@@ -43,35 +38,38 @@ RSpec.describe 'Admin::UsersController' do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      it 'redirects to the user page' do
-        patch admin_user_path(user), params: { user: valid_attributes }
-        expect(response).to redirect_to(admin_user_path(user))
-      end
+      let(:valid_attributes) { { first_name: 'John', last_name: 'Doe', email: 'john.doe@example.com' } }
 
       it 'updates the user attributes' do
         patch admin_user_path(user), params: { user: valid_attributes }
         expect(user.reload.first_name).to eq('John')
       end
+
+      it 'redirects to the user page' do
+        patch admin_user_path(user), params: { user: valid_attributes }
+        expect(response).to redirect_to(admin_user_path(user))
+      end
     end
 
     context 'with invalid parameters' do
       it 'renders the edit form with errors' do
-        patch admin_user_path(user), params: { user: invalid_attributes }
+        patch admin_user_path(user), params: { user: { email: '' } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe 'DELETE /destroy' do
+    let(:user_to_delete) { create(:user) }
+    let(:user_to_delete_and_redirect) { create(:user) }
+
     it 'deletes the user' do
-      user_to_delete = create(:user)
-      expect do
-        delete admin_user_path(user_to_delete)
-      end.to change(User, :count).by(-1)
+      user_to_delete
+      expect { delete admin_user_path(user_to_delete) }.to change(User, :count).by(-1)
     end
 
-    it 'redirects to the users index' do
-      user_to_delete = create(:user)
+    it 'redirects to the index' do
+      user_to_delete_and_redirect
       delete admin_user_path(user_to_delete)
       expect(response).to redirect_to(admin_users_path)
     end
@@ -80,40 +78,99 @@ RSpec.describe 'Admin::UsersController' do
   describe 'GET /edit_roles' do
     it 'renders the edit roles form' do
       get edit_roles_admin_user_path(user)
-      expect(response).to be_successful
-    end
-
-    it 'assigns roles list' do
-      roles.each { |role| Role.find_or_create_by!(name: role) } # Prevent duplicate role creation
-      get edit_roles_admin_user_path(user)
       expect(assigns(:roles)).to match_array(roles.map { |r| [r.capitalize, r] })
     end
   end
 
   describe 'POST /update_roles' do
     context 'with valid roles' do
-      it 'redirects to the user page' do
-        roles.each { |role| Role.find_or_create_by!(name: role) }
-        post update_roles_admin_user_path(user), params: { user: { roles: %w[admin doctor] } }
-        expect(response).to redirect_to(admin_user_path(user))
-      end
-
-      it 'updates the user roles' do
-        roles.each { |role| Role.find_or_create_by!(name: role) }
+      it 'updates the roles' do
         post update_roles_admin_user_path(user), params: { user: { roles: %w[admin doctor] } }
         expect(user.reload.roles.map(&:name)).to include('admin', 'doctor')
+      end
+
+      it 'redirects to the user page' do
+        post update_roles_admin_user_path(user), params: { user: { roles: %w[admin doctor] } }
+        expect(response).to redirect_to(admin_user_path(user))
       end
     end
 
     context 'with invalid roles' do
+      let(:invalid_roles) { %w[invalid_role] }
+
       it 'returns an unprocessable entity status' do
-        post update_roles_admin_user_path(user), params: { user: { roles: %w[invalid_role] } }
+        post update_roles_admin_user_path(user), params: { user: { roles: invalid_roles } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'assigns errors to the user object' do
-        post update_roles_admin_user_path(user), params: { user: { roles: %w[invalid_role] } }
+      it 'assigns errors' do
+        post update_roles_admin_user_path(user), params: { user: { roles: invalid_roles } }
         expect(assigns(:user).errors[:base]).to include('Invalid roles detected: invalid_role')
+      end
+    end
+
+    context 'with empty roles' do
+      let(:empty_roles) { [] }
+
+      it 'returns an unprocessable entity status' do
+        post update_roles_admin_user_path(user), params: { user: { roles: empty_roles } }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'assigns errors' do
+        post update_roles_admin_user_path(user), params: { user: { roles: empty_roles } }
+        expect(assigns(:user).errors[:base]).to include('You can not leave user without any role')
+      end
+    end
+  end
+
+  describe 'GET /edit_assigned_users' do
+    subject(:users_to_assign) { create_list(:user, 3) }
+
+    it 'renders the edit assigned users form' do
+      users_to_assign.each do |assigned_user|
+        doctor.assigned_users << assigned_user
+      end
+
+      get edit_assigned_users_admin_user_path(doctor)
+      expect(assigns(:user).assigned_users).to match_array(users_to_assign)
+    end
+
+    it 'authorizes the user to edit assigned users' do
+      expect do
+        get edit_assigned_users_admin_user_path(doctor)
+      end.not_to raise_error
+    end
+  end
+
+  describe 'POST /update_assigned_users' do
+    subject(:users_to_assign) { create_list(:user, 3) }
+
+    context 'with valid user IDs' do
+      let(:valid_user_ids) { users_to_assign.map(&:id) }
+
+      it 'redirects to the user page' do
+        post update_assigned_users_admin_user_path(doctor), params: { user: { users: valid_user_ids } }
+        expect(response).to redirect_to(admin_user_path(doctor))
+      end
+
+      it 'updates the assigned users' do
+        post update_assigned_users_admin_user_path(doctor), params: { user: { users: valid_user_ids } }
+        expect(doctor.reload.assigned_users.pluck(:id)).to match_array(valid_user_ids)
+      end
+    end
+
+    context 'with invalid user IDs' do
+      let(:invalid_user_ids) { [99_999, 100_000] }
+
+      it 'returns an unprocessable entity status' do
+        post update_assigned_users_admin_user_path(doctor), params: { user: { users: invalid_user_ids } }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'assigns errors' do
+        post update_assigned_users_admin_user_path(doctor), params: { user: { users: invalid_user_ids } }
+        expect(assigns(:user).errors[:base]).to include('Unexpected error while updating user')
       end
     end
   end
