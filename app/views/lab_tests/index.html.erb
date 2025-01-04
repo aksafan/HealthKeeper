@@ -4,12 +4,12 @@
     <header class="tw-my-2 tw-flex tw-flex-center tw-justify-between tw-items-center">
       <h1 class="tw-text-lg">Lab Tests</h1>
 
-      <% if current_user.full_access_roles_can? %>
+      <% if assigned_users? %>
         <div class="flex justify-end mb-1">
           <%= form_with url: lab_tests_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "lab_tests" } do |form| %>
             <%= form.select :user_id,
                             options_for_select(
-                              assigned_users_list_for_select(current_user),
+                              assigned_users_list_for_select(current_user, current_user),
                               @chosen_user_id
                             ),
                             { include_blank: false },

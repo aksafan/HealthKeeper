@@ -101,7 +101,12 @@ class LabTestsController < ApplicationController
   end
 
   def set_filter_by_user_id
-    @chosen_user_id = filter_params.empty? ? current_user.id : filter_params[:user_id]
+    current_user_selected = filter_params.empty? ||
+                            !filter_params[:user_id] ||
+                            # To exclude not assigned users selecting. TODO: move this to Pundit policy.
+                            current_user.assigned_users.map(&:id).exclude?(filter_params[:user_id].to_i)
+
+    @chosen_user_id = current_user_selected ? current_user.id : filter_params[:user_id]
   end
 
   # Only allow a list of trusted parameters through.
