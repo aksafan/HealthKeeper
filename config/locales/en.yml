@@ -80,6 +80,7 @@ en:
   errors:
     messages:
       invalid_roles_detected: "Invalid roles detected: %{invalid_roles}"
+      empty_roles_detected: "You can not leave user without any role"
       remove_role_failure: "Failed to remove role: %{role}"
       add_role_failure: "Failed to add role: %{role}"
       unexpected_error: "Unexpected error while updating user"
