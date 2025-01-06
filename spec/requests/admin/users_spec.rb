@@ -49,6 +49,11 @@ RSpec.describe 'Admin::UsersController' do
         patch admin_user_path(user), params: { user: valid_attributes }
         expect(response).to redirect_to(admin_user_path(user))
       end
+
+      it 'sets the flash notice message' do
+        patch admin_user_path(user), params: { user: valid_attributes }
+        expect(flash[:notice]).to eq(t('admin.users.update.success'))
+      end
     end
 
     context 'with invalid parameters' do
@@ -73,6 +78,12 @@ RSpec.describe 'Admin::UsersController' do
       delete admin_user_path(user_to_delete)
       expect(response).to redirect_to(admin_users_path)
     end
+
+    it 'sets the flash notice message' do
+      user_to_delete_and_redirect
+      delete admin_user_path(user_to_delete)
+      expect(flash[:notice]).to eq(t('admin.users.destroy.success'))
+    end
   end
 
   describe 'GET /edit_roles' do
@@ -92,6 +103,11 @@ RSpec.describe 'Admin::UsersController' do
       it 'redirects to the user page' do
         post update_roles_admin_user_path(user), params: { user: { roles: %w[admin doctor] } }
         expect(response).to redirect_to(admin_user_path(user))
+      end
+
+      it 'sets the flash notice message' do
+        post update_roles_admin_user_path(user), params: { user: { roles: %w[admin doctor] } }
+        expect(flash[:notice]).to eq(t('admin.users.update_roles.success'))
       end
     end
 
@@ -158,6 +174,20 @@ RSpec.describe 'Admin::UsersController' do
         post update_assigned_users_admin_user_path(doctor), params: { user: { users: valid_user_ids } }
         expect(doctor.reload.assigned_users.pluck(:id)).to match_array(valid_user_ids)
       end
+
+      it 'removes the current user from the session if needed' do
+        inject_session(user_id: users_to_assign.first.id) do
+          post update_assigned_users_admin_user_path(doctor), params: { user: { users: valid_user_ids[1..] } }
+          expect(request.session[:user_id]).to be_nil
+        end
+      end
+
+      it 'does not remove the current user from the session if they are still assigned' do
+        inject_session(user_id: users_to_assign.first.id) do
+          post update_assigned_users_admin_user_path(doctor), params: { user: { users: valid_user_ids } }
+          expect(request.session[:user_id]).to eq(users_to_assign.first.id)
+        end
+      end
     end
 
     context 'with invalid user IDs' do
@@ -171,6 +201,50 @@ RSpec.describe 'Admin::UsersController' do
       it 'assigns errors' do
         post update_assigned_users_admin_user_path(doctor), params: { user: { users: invalid_user_ids } }
         expect(assigns(:user).errors[:base]).to include('Unexpected error while updating user')
+      end
+    end
+  end
+
+  describe 'POST /switch_user' do
+    let(:target_user) { create(:user) }
+
+    context 'when a valid user_id is provided' do
+      it 'sets the session user_id to the provided user_id' do
+        post switch_user_admin_user_path(target_user),
+             params: { user_id: target_user.id },
+             headers: { 'HTTP_REFERER' => admin_users_path }
+        expect(session[:user_id]).to eq(target_user.id)
+      end
+
+      it 'redirects back to the referer' do
+        post switch_user_admin_user_path(target_user),
+             params: { user_id: target_user.id },
+             headers: { 'HTTP_REFERER' => admin_users_path }
+        expect(response).to redirect_to(admin_users_path)
+      end
+
+      it 'sets the flash notice message' do
+        post switch_user_admin_user_path(target_user),
+             params: { user_id: target_user.id },
+             headers: { 'HTTP_REFERER' => admin_users_path }
+        expect(flash[:notice]).to eq(t('admin.users.switch_user.success'))
+      end
+    end
+
+    context 'when no user_id is provided' do
+      it 'does not set the session user_id' do
+        post switch_user_admin_user_path(target_user), headers: { 'HTTP_REFERER' => admin_users_path }
+        expect(session[:user_id]).to be_nil
+      end
+
+      it 'redirects back to the referer' do
+        post switch_user_admin_user_path(target_user), headers: { 'HTTP_REFERER' => admin_users_path }
+        expect(response).to redirect_to(admin_users_path)
+      end
+
+      it 'sets the flash alert message' do
+        post switch_user_admin_user_path(target_user), headers: { 'HTTP_REFERER' => admin_users_path }
+        expect(flash[:alert]).to eq(t('admin.users.switch_user.failure'))
       end
     end
   end

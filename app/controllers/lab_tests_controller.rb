@@ -6,6 +6,7 @@ class LabTestsController < ApplicationController
   before_action :build_lab_test, only: %i[create]
   before_action :set_filter_by_user_id, only: %i[index]
   before_action :set_biomarkers, only: %i[index new edit create]
+
   # GET /lab_tests or /lab_tests.json
   def index
     authorize LabTest
@@ -17,14 +18,6 @@ class LabTestsController < ApplicationController
     @biomarkers = policy_scope(Biomarker)
                   .includes(:reference_ranges, :lab_tests)
                   .where(lab_tests: { user_id: @chosen_user_id })
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render partial: 'lab_tests/index_table',
-               locals: { recordables: @recordables, biomarkers: @biomarkers }
-      end
-    end
   end
 
   # GET /lab_tests/1 or /lab_tests/1.json
@@ -139,15 +132,6 @@ class LabTestsController < ApplicationController
 
   def build_lab_test
     @lab_test = current_user.lab_tests.build(lab_test_params)
-  end
-
-  def set_filter_by_user_id
-    current_user_selected = filter_params.empty? ||
-                            !filter_params[:user_id] ||
-                            # To exclude not assigned users selecting. TODO: move this to Pundit policy.
-                            current_user.assigned_users.map(&:id).exclude?(filter_params[:user_id].to_i)
-
-    @chosen_user_id = current_user_selected ? current_user.id : filter_params[:user_id]
   end
 
   # Only allow a list of trusted parameters through.

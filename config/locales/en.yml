@@ -72,6 +72,9 @@ en:
         success: "User roles were successfully updated."
       update_assigned_users:
         success: "Users were successfully assigned."
+      switch_user:
+        success: "Client was switched"
+        failure: "Client was not switched"
 
   application:
     user_not_authorized:

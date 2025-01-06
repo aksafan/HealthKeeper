@@ -26,6 +26,23 @@
             <%= link_to "Users", admin_users_path, class: "nav-link #{current_page?(admin_users_path) ? 'active' : ''}" %>
           <% end %>
         </li>
+        <li class="nav-item">
+          <% if assigned_users? %>
+            <div class="flex justify-end mb-1">
+              <%= form_with url: switch_user_admin_user_path(current_user), method: :post do |form| %>
+                <%= form.select :user_id,
+                                options_for_select(
+                                  assigned_users_list_for_select(current_user, current_user),
+                                  @chosen_user_id
+                                ),
+                                { include_blank: false },
+                                class: "tw-border-blue-500 rounded"
+                %>
+                <%= form.submit "Switch client", class: "tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+              <% end %>
+            </div>
+          <% end %>
+        </li>
       </ul>
       <% if user_signed_in? %>
         <span> Welcome <%= current_user.full_name %> </span>

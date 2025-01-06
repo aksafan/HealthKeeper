@@ -39,13 +39,13 @@
 
     <div class="tw-mb-4" data-controller="biomarker-select">
         <%= form.label :biomarker_id, class: "tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
-        <%= form.collection_select :biomarker_id, 
+        <%= form.collection_select :biomarker_id,
                 @biomarkers,
                 :id,
                 :name,
                 { prompt: "Select biomarker", required: true },
                 { class: "tw-mt-1 tw-block tw-w-full tw-rounded-md #{@lab_test.errors[:biomarker_id].present? ? 'tw-border-red-500' : 'tw-border-gray-300'}",
-                  data: { 
+                  data: {
                     biomarker_select_target: "select",
                     action: "change->biomarker-select#updateReferenceRange"
                   }
@@ -59,7 +59,7 @@
             <p class="tw-text-sm tw-text-gray-600">
                 <strong>Reference Range:</strong>
                 <span data-biomarker-select-target="referenceRange">
-                    <%= @selected_biomarker&.reference_ranges&.first ? 
+                    <%= @selected_biomarker&.reference_ranges&.first ?
                         "#{@selected_biomarker.reference_ranges.first.min_value} - #{@selected_biomarker.reference_ranges.first.max_value}" :
                         "Select biomarker first" %>
                 </span>
@@ -72,10 +72,10 @@
             </p>
         </div>
 
-        <%= form.hidden_field :reference_range_id, 
+        <%= form.hidden_field :reference_range_id,
             value: @selected_biomarker&.reference_ranges&.first&.id,
             data: { biomarker_select_target: "referenceRangeId" } %>
-        <%= form.hidden_field :unit, 
+        <%= form.hidden_field :unit,
             value: @selected_biomarker&.reference_ranges&.first&.unit,
             data: { biomarker_select_target: "unitField" } %>
     </div>
@@ -83,10 +83,10 @@
     <div class="tw-mb-4">
         <%= form.label :value, class: "tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
         <div class="tw-flex tw-items-center">
-            <%= form.number_field :value, 
+            <%= form.number_field :value,
                     step: :any,
                     required: true,
-                    class: "tw-mt-1 tw-block tw-w-full tw-rounded-md #{@lab_test.errors[:value].present? ? 'tw-border-red-500' : 'tw-border-gray-300'}" 
+                    class: "tw-mt-1 tw-block tw-w-full tw-rounded-md #{@lab_test.errors[:value].present? ? 'tw-border-red-500' : 'tw-border-gray-300'}"
                 %>
         </div>
 
@@ -97,7 +97,7 @@
         <%= form.text_area :notes, class: "tw-mt-1 tw-block tw-w-full tw-rounded-md tw-border-gray-300" %>
     </div>
 
-    <%= form.submit "Create #{params[:test_type]&.titleize || 'Lab'} Test", 
+    <%= form.submit "Create #{params[:test_type]&.titleize || 'Lab'} Test",
                    class: "tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
     <% end %>
 

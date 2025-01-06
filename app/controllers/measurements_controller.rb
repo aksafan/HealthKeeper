@@ -7,7 +7,7 @@ class MeasurementsController < ApplicationController
   # GET /measurements or /measurements.json
   def index
     authorize Measurement
-    @measurements = policy_scope(Measurement.all)
+    @measurements = policy_scope(Measurement).where(user_id: @chosen_user_id)
   end
 
   # GET /measurements/1 or /measurements/1.json

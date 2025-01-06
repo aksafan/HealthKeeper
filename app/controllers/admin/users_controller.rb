@@ -81,6 +81,8 @@ module Admin
 
       respond_to do |format|
         if @user.assign_users?(@user_params_user_ids)
+          delete_user_from_session if should_remove_user_from_session
+
           format.html { redirect_to admin_user_url(@user), notice: t('.success') }
           format.json { render :show, status: :ok, location: @user }
         else
@@ -90,9 +92,31 @@ module Admin
       end
     end
 
+    # POST /switch_user or /switch_user.json
+    def switch_user
+      if params['user_id']
+        session[:user_id] = params['user_id'].to_i
+
+        reload_page notice: t('.success')
+      else
+        reload_page alert: t('.failure')
+      end
+    end
+
     private
 
-    # Use callbacks to share common setup or constraints between actions.
+    def reload_page(message)
+      redirect_to(request.referer || admin_users_path, message)
+    end
+
+    def delete_user_from_session
+      session.delete(:user_id)
+    end
+
+    def should_remove_user_from_session
+      @user_params_user_ids.exclude?(session[:user_id])
+    end
+
     def set_user
       @user = User.find(params[:id])
     end
@@ -109,7 +133,6 @@ module Admin
       @user_params_user_ids = user_params[:users].compact_blank
     end
 
-    # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, roles: [], users: [])
     end

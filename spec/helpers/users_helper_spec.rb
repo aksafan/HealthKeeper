@@ -151,9 +151,63 @@ RSpec.describe UsersHelper do
     context 'when the user has no assigned users' do
       let(:user_with_no_assigned_users) { instance_double(User, assigned_users: []) }
 
-      it 'returns an empty array' do
+      it 'returns an array with the single current user' do
         result = helper.assigned_users_list_for_select(user_with_no_assigned_users, current_user)
-        expect(result).to eq([])
+        expect(result).to eq([current_user.full_name])
+      end
+    end
+  end
+
+  describe '#assigned_users?' do
+    let(:current_user) { instance_double(User) }
+
+    before do
+      allow(helper).to receive(:current_user).and_return(current_user)
+    end
+
+    context 'when current_user has full access roles and assigned users' do
+      before do
+        allow(current_user).to receive_messages(full_access_roles_can?: true, assigned_users: [instance_double(User)])
+      end
+
+      it 'returns true' do
+        expect(helper.assigned_users?).to be true
+      end
+    end
+
+    context 'when current_user has full access roles but no assigned users' do
+      before do
+        allow(current_user).to receive_messages(full_access_roles_can?: true, assigned_users: [])
+      end
+
+      it 'returns false' do
+        expect(helper.assigned_users?).to be false
+      end
+    end
+
+    context 'when current_user does not have full access roles' do
+      before do
+        allow(current_user).to receive(:full_access_roles_can?).and_return(false)
+      end
+
+      it 'returns false, regardless of assigned users' do
+        allow(current_user).to receive(:assigned_users).and_return([instance_double(User)])
+        expect(helper.assigned_users?).to be false
+      end
+
+      it 'returns false when there are no assigned users' do
+        allow(current_user).to receive(:assigned_users).and_return([])
+        expect(helper.assigned_users?).to be false
+      end
+    end
+
+    context 'when current_user is nil' do
+      before do
+        allow(helper).to receive(:current_user).and_return(nil)
+      end
+
+      it 'returns false' do
+        expect(helper.assigned_users?).to be false
       end
     end
   end

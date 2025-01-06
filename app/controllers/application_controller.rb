@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  before_action :set_filter_by_user_id
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -36,5 +38,9 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug { "Entity #{error.model} with id #{error.id} is not found." }
 
     render file: "#{::Rails.root}/public/404.html", status: :not_found
+  end
+
+  def set_filter_by_user_id
+    @chosen_user_id = session.fetch(:user_id, current_user&.id)
   end
 end
