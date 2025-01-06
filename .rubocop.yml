@@ -8,6 +8,7 @@ require:
   - rubocop-rspec
   - rubocop-rspec_rails
   - rubocop-factory_bot
+  - rubocop-capybara
 
 AllCops:
   NewCops: enable
@@ -24,4 +25,3 @@ Metrics/MethodLength:
 
 Style/Documentation:
   Enabled: false
-  

@@ -32,6 +32,8 @@ jobs:
         run: gem install rubocop-rspec_rails
       - name: Install Rubocop Factory Bot
         run: gem install rubocop-factory_bot
+      - name: Install Rubocop Capybara
+        run: gem install rubocop-capybara
       - name: Check code
         run: rubocop
   rspec-test:

@@ -12,7 +12,7 @@ LabTest.destroy_all
 Measurement.destroy_all
 
 # Create Users
-Rails.logger.debug 'Creating Users...'
+puts 'Creating Users...'
 10.times do
   User.create!(
     first_name: Faker::Name.first_name,
@@ -25,7 +25,7 @@ end
 users = User.all
 
 # Assign roles to existing users
-Rails.logger.debug 'Assign roles to existing users...'
+puts 'Assign roles to existing users...'
 users.each_with_index do |user, i|
   if i.zero?
     user.add_role Role::ADMIN
@@ -67,7 +67,7 @@ health_coaches.each do |health_coach|
 end
 
 # Create Biomarkers
-Rails.logger.debug 'Creating Biomarkers...'
+puts 'Creating Biomarkers...'
 biomarkers = [
   'Glucose',
   'Hemoglobin',
@@ -131,7 +131,7 @@ min_max_map = {
 }
 
 # Create ReferenceRanges
-Rails.logger.debug 'Creating Reference Ranges...'
+puts 'Creating Reference Ranges...'
 biomarker_records.each do |biomarker| # rubocop:disable Metrics/BlockLength
   unit = case biomarker.name
          when 'Glucose', 'Cholesterol', 'Triglycerides', 'LDL Cholesterol', 'HDL Cholesterol', 'Iron', 'Bilirubin',
@@ -223,7 +223,7 @@ biomarker_records.each do |biomarker| # rubocop:disable Metrics/BlockLength
 end
 
 # Create HealthRecords
-Rails.logger.debug 'Creating Health Records...'
+puts 'Creating Health Records...'
 start_day = rand(10).to_i
 users.each do |user|
   i = 0
@@ -240,7 +240,7 @@ end
 health_records = HealthRecord.all
 
 # Create LabTests
-Rails.logger.debug 'Creating Lab Tests...'
+puts 'Creating Lab Tests...'
 health_records.each do |health_record|
   20.times do
     biomarker = biomarker_records.sample
@@ -267,7 +267,7 @@ health_records.each do |health_record|
 end
 
 # Create Measurements
-Rails.logger.debug 'Creating Measurements...'
+puts 'Creating Measurements...'
 measurement_types = { height: 0, weight: 1, chest: 2, waist: 3, hips: 4, wrist: 5 }
 weight_unit = { kg: 'kg', lb: 'lb' }
 height_unit = { cm: 'cm', ft: 'ft' }

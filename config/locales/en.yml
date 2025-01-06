@@ -75,7 +75,7 @@ en:
 
   application:
     user_not_authorized:
-      failure: 'You are not authorized to perform this action.'
+      failure: "You are not authorized to perform this action."
 
   errors:
     messages:
@@ -86,3 +86,11 @@ en:
       unexpected_error: "Unexpected error while updating user"
       remove_user_assignment_failure: "Failed to unseat user with ID: %{id}"
       add_user_assignment_failure: "Failed to assign user with ID: %{role}"
+
+  activerecord:
+    errors:
+      models:
+        lab_test:
+          attributes:
+            value:
+              must_be_nonnegative_and_numeric: "must be both nonnegative and numeric"

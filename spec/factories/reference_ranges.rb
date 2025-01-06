@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :reference_range do |f|
+  factory :reference_range do
     biomarker
-    f.min_value { 70.0 }
-    f.max_value { 99.0 }
-    f.unit { 'mg/dL' }
-    f.source { 'DILA' }
+    min_value { 70.0 }
+    max_value { 99.0 }
+    unit { 'mg/dL' }
+    source { 'Standard Lab' }
   end
 end
