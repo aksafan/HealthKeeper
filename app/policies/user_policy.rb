@@ -37,6 +37,10 @@ class UserPolicy < ApplicationPolicy
     user.admin? && record.full_access_roles_can?
   end
 
+  def switch_user
+    user.full_access_roles_can?
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       if user.admin?

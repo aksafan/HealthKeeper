@@ -1,7 +1,107 @@
-<h1>New lab test</h1>
+<div class="tw-container tw-mx-auto tw-p-4">
+    <h1 class="tw-text-2xl tw-font-bold tw-mb-4">New <%= params[:test_type]&.titleize || 'Lab' %> Test</h1>
 
-<%= render "form", lab_test: @lab_test %>
+    <% if @lab_test.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show tw-mt-4" role="alert">
+        <h2 class="tw-font-bold tw-text-lg">
+            <%= pluralize(@lab_test.errors.count, "error") %> prohibited this test from being saved:
+        </h2>
+        <ul class="tw-list-disc tw-list-inside">
+            <% @lab_test.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% elsif flash.present? %>
+    <div class="alert alert-<%= flash.notice.present? ? 'success': 'danger' %> alert-dismissible fade show tw-mt-4" role="alert">
+        <%= flash.notice.present? ? flash.notice : flash.alert %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% end %>
 
-<div>
-  <%= link_to "Back to lab tests", lab_tests_path %>
+    <%= form_with(model: @lab_test, local: true, class: "tw-space-y-4") do |form| %>
+
+    <% if assigned_users? %>
+    <div class="tw-mb-4">
+        <%= label_tag :user_id, "Select Patient", class: "tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+        <%= form.select :user_id,
+            options_for_select(
+              assigned_users_list_for_select(current_user, current_user)
+            ),
+            { include_blank: false },
+            class: "border-blue-500 rounded"
+        %>
+    </div>
+    <% else %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <% end %>
+
+    <div class="tw-mb-4" data-controller="biomarker-select">
+        <%= form.label :biomarker_id, class: "tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+        <%= form.collection_select :biomarker_id,
+                @biomarkers,
+                :id,
+                :name,
+                { prompt: "Select biomarker", required: true },
+                { class: "tw-mt-1 tw-block tw-w-full tw-rounded-md #{@lab_test.errors[:biomarker_id].present? ? 'tw-border-red-500' : 'tw-border-gray-300'}",
+                  data: {
+                    biomarker_select_target: "select",
+                    action: "change->biomarker-select#updateReferenceRange"
+                  }
+                }
+              %>
+        <% if @lab_test.errors[:biomarker_id].any? %>
+        <p class="tw-text-red-500 tw-text-sm tw-mt-1"><%= @lab_test.errors[:biomarker_id].join(', ') %></p>
+        <% end %>
+
+        <div id="reference_range_info" class="tw-mt-2 tw-p-4 tw-bg-gray-50 tw-rounded-md">
+            <p class="tw-text-sm tw-text-gray-600">
+                <strong>Reference Range:</strong>
+                <span data-biomarker-select-target="referenceRange">
+                    <%= @selected_biomarker&.reference_ranges&.first ?
+                        "#{@selected_biomarker.reference_ranges.first.min_value} - #{@selected_biomarker.reference_ranges.first.max_value}" :
+                        "Select biomarker first" %>
+                </span>
+            </p>
+            <p class="tw-text-sm tw-text-gray-600">
+                <strong>Unit:</strong>
+                <span data-biomarker-select-target="unit">
+                    <%= @selected_biomarker&.reference_ranges&.first&.unit || '-' %>
+                </span>
+            </p>
+        </div>
+
+        <%= form.hidden_field :reference_range_id,
+            value: @selected_biomarker&.reference_ranges&.first&.id,
+            data: { biomarker_select_target: "referenceRangeId" } %>
+        <%= form.hidden_field :unit,
+            value: @selected_biomarker&.reference_ranges&.first&.unit,
+            data: { biomarker_select_target: "unitField" } %>
+    </div>
+
+    <div class="tw-mb-4">
+        <%= form.label :value, class: "tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+        <div class="tw-flex tw-items-center">
+            <%= form.number_field :value,
+                    step: :any,
+                    required: true,
+                    class: "tw-mt-1 tw-block tw-w-full tw-rounded-md #{@lab_test.errors[:value].present? ? 'tw-border-red-500' : 'tw-border-gray-300'}"
+                %>
+        </div>
+
+    </div>
+
+    <div class="tw-mb-4">
+        <%= form.label :notes, class: "tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+        <%= form.text_area :notes, class: "tw-mt-1 tw-block tw-w-full tw-rounded-md tw-border-gray-300" %>
+    </div>
+
+    <%= form.submit "Create #{params[:test_type]&.titleize || 'Lab'} Test",
+                   class: "tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
+    <% end %>
+
+    <div class="tw-mt-4">
+        <%= link_to "Back to lab tests", lab_tests_path, class: "tw-text-blue-500 hover:tw-text-blue-700" %>
+    </div>
 </div>

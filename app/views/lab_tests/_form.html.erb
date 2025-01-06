@@ -1,52 +1,42 @@
 <%= form_with(model: lab_test) do |form| %>
-  <% if lab_test.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(lab_test.errors.count, "error") %> prohibited this lab_test from being saved:</h2>
+<% if lab_test.errors.any? %>
+<div style="color: red">
+    <h2><%= pluralize(lab_test.errors.count, "error") %> prohibited this lab_test from being saved:</h2>
 
-      <ul>
+    <ul>
         <% lab_test.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <li><%= error.full_message %></li>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+    </ul>
+</div>
+<% end %>
 
-  <div>
+<div>
     <%= form.label :biomarker_id, style: "display: block" %>
     <%= form.text_field :biomarker_id %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :value, style: "display: block" %>
     <%= form.text_field :value %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :unit, style: "display: block" %>
     <%= form.text_field :unit %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :reference_range_id, style: "display: block" %>
     <%= form.text_field :reference_range_id %>
-  </div>
+</div>
 
-  <div>
-    <%= form.label :recordable_type, style: "display: block" %>
-    <%= form.text_field :recordable_type %>
-  </div>
-
-  <div>
-    <%= form.label :recordable_id, style: "display: block" %>
-    <%= form.number_field :recordable_id %>
-  </div>
-
-  <div>
+<div>
     <%= form.label :notes, style: "display: block" %>
     <%= form.text_area :notes %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.submit class: "tw-my-4 tw-bg-blue-500  tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" %>
-  </div>
+</div>
 <% end %>

@@ -2,7 +2,8 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.configure do # rubocop:disable Metrics/BlockLength
+# rubocop:disable Metrics/BlockLength
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -78,3 +79,4 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 end
+# rubocop:enable Metrics/BlockLength

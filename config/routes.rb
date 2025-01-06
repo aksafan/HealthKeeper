@@ -2,9 +2,9 @@
 
 Rails.application.routes.draw do
   resources :biomarkers do
-    resources :reference_ranges, only: %i[show new create edit update destroy]
+    resources :reference_ranges
   end
-  resources :reference_ranges
+  resources :reference_ranges, only: %i[show new create edit update destroy]
 
   resources :measurements
   resources :lab_tests
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         post :update_roles
         get :edit_assigned_users
         post :update_assigned_users
+        post :switch_user
       end
     end
   end
